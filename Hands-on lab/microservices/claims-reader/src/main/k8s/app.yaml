@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: claims-reader-config
+data:
+  AZURE_COSMOS_URI: ${AZURE_COSMOS_URI}
+  AZURE_COSMOS_DATABASE: ${AZURE_COSMOS_DATABASE}
+  AZURE_COSMOS_POPULATEQUERYMETRICS: "true"
+  AZURE_COSMOS_VALIDATEURI: "true"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: claims-reader-secret
+type: Opaque
+stringData:
+    AZURE_COSMOS_KEY: ${AZURE_COSMOS_KEY}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: claims-reader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: claims-reader
+  template:
+    metadata:
+      labels:
+        app: claims-reader
+    spec:
+      containers:
+      - name: claims-reader
+        image: appinnovation.azurecr.io/apps/claims-reader:0.0.2
+        ports:
+        - containerPort: 8080
+        env:
+        - name: AZURE_COSMOS_URI
+          valueFrom:
+            configMapKeyRef:
+              name: claims-reader-config
+              key: AZURE_COSMOS_URI
+        - name: AZURE_COSMOS_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: claims-reader-config
+              key: AZURE_COSMOS_DATABASE
+        - name: AZURE_COSMOS_POPULATEQUERYMETRICS
+          valueFrom:
+            configMapKeyRef:
+              name: claims-reader-config
+              key: AZURE_COSMOS_POPULATEQUERYMETRICS
+        - name: AZURE_COSMOS_VALIDATEURI
+          valueFrom:
+            configMapKeyRef:
+              name: claims-reader-config
+              key: AZURE_COSMOS_VALIDATEURI
+        - name: AZURE_COSMOS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: claims-reader-secret
+              key: AZURE_COSMOS_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: claims-reader 
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+  selector:
+    app: claims-reader
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: claims-reader
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+  - host: claims-reader.a87a364509b642d581f2.westeurope.aksapp.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service: 
+            name: claims-reader
+            port: 
+              number: 8080

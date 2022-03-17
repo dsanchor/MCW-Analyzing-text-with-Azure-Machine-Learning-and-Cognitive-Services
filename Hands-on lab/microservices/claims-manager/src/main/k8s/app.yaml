@@ -1,0 +1,141 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: claims-manager-config
+data:
+  AZURE_COSMOS_URI: ${AZURE_COSMOS_URI}
+  AZURE_COSMOS_DATABASE: ${AZURE_COSMOS_DATABASE}
+  AZURE_COSMOS_POPULATEQUERYMETRICS: "true"
+  AZURE_COSMOS_VALIDATEURI: "true"
+  MANAGER_CLASSIFIER_URL: ${MANAGER_CLASSIFIER_URL}
+  MANAGER_CLASSIFIER_PATH: ${MANAGER_CLASSIFIER_PATH}
+  MANAGER_SUMMARIZER_URL: ${MANAGER_SUMMARIZER_URL}
+  MANAGER_SUMMARIZER_PATH: ${MANAGER_SUMMARIZER_PATH}
+  MANAGER_TEXTANALYTICS_ENDPOINT: ${MANAGER_TEXTANALYTICS_ENDPOINT}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: claims-manager-secret
+type: Opaque
+stringData:
+    AZURE_COSMOS_KEY: ${AZURE_COSMOS_KEY}
+    MANAGER_CLASSIFIER_KEY: ${MANAGER_CLASSIFIER_KEY}
+    MANAGER_SUMMARIZER_KEY: ${MANAGER_SUMMARIZER_KEY}
+    MANAGER_TEXTANALYTICS_KEY: ${MANAGER_TEXTANALYTICS_KEY}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: claims-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: claims-manager
+  template:
+    metadata:
+      labels:
+        app: claims-manager
+    spec:
+      containers:
+      - name: claims-manager
+        image: appinnovation.azurecr.io/apps/claims-manager:0.0.4
+        ports:
+        - containerPort: 8080
+        env:
+        - name: AZURE_COSMOS_URI
+          valueFrom:
+            configMapKeyRef:
+              name: claims-manager-config
+              key: AZURE_COSMOS_URI
+        - name: AZURE_COSMOS_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: claims-manager-config
+              key: AZURE_COSMOS_DATABASE
+        - name: AZURE_COSMOS_POPULATEQUERYMETRICS
+          valueFrom:
+            configMapKeyRef:
+              name: claims-manager-config
+              key: AZURE_COSMOS_POPULATEQUERYMETRICS
+        - name: AZURE_COSMOS_VALIDATEURI
+          valueFrom:
+            configMapKeyRef:
+              name: claims-manager-config
+              key: AZURE_COSMOS_VALIDATEURI
+        - name: MANAGER_CLASSIFIER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: claims-manager-config
+              key: MANAGER_CLASSIFIER_URL
+        - name: MANAGER_CLASSIFIER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: claims-manager-config
+              key: MANAGER_CLASSIFIER_PATH
+        - name: MANAGER_SUMMARIZER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: claims-manager-config
+              key: MANAGER_SUMMARIZER_URL
+        - name: MANAGER_SUMMARIZER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: claims-manager-config
+              key: MANAGER_SUMMARIZER_PATH
+        - name: MANAGER_TEXTANALYTICS_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: claims-manager-config
+              key: MANAGER_TEXTANALYTICS_ENDPOINT
+        - name: AZURE_COSMOS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: claims-manager-secret
+              key: AZURE_COSMOS_KEY
+        - name: MANAGER_CLASSIFIER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: claims-manager-secret
+              key: MANAGER_CLASSIFIER_KEY
+        - name: MANAGER_SUMMARIZER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: claims-manager-secret
+              key: MANAGER_SUMMARIZER_KEY
+        - name: MANAGER_TEXTANALYTICS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: claims-manager-secret
+              key: MANAGER_TEXTANALYTICS_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: claims-manager 
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+  selector:
+    app: claims-manager
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: claims-manager
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+  - host: claims-manager.a87a364509b642d581f2.westeurope.aksapp.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service: 
+            name: claims-manager
+            port: 
+              number: 8080
