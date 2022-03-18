@@ -31,10 +31,12 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
   - [Before the hands-on lab](#before-the-hands-on-lab)
     - [Task 1: Create a resource group](#task-1-create-a-resource-group)
     - [Task 2: Provision a Text Analytics API](#task-2-provision-a-text-analytics-api)
-    - [Task 3: Create an Azure Machine Learning workspace](#task-3-create-an-azure-machine-learning-workspace)
-    - [Task 4: Create a compute instance](#task-4-create-a-compute-instance)
-    - [Task 5: Import the lab notebooks](#task-5-import-the-lab-notebooks)
-    - [Task 6: Setup lab environment](#task-6-setup-lab-environment)
+    - [Task 3: Provision an Azure Container Registry](#task-3-provision-an-azure-container-registry) 
+    - [Task 4: Create an Azure Machine Learning workspace](#task-4-create-an-azure-machine-learning-workspace)
+    - [Task 5: Create an Azure Kubernetes Service](#task-5-create-an-azure-kubernetes-service)
+    - [Task 6: Configure AKS compute in Azure Machine Learning Studio](#task-6-configure-aks-compute-in-azure-machine-learning-studio)
+    - [Task 7: Import the lab notebooks](#task-7-import-the-lab-notebooks)
+    - [Task 8: Setup lab environment](#task-8-setup-lab-environment)
 
 <!-- /TOC -->
 
@@ -49,7 +51,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 ## Before the hands-on lab
 
-Duration: 25 minutes
+Duration: 45 minutes
 
 In this exercise, you set up your environment for use in the rest of the hands-on lab. You should follow all steps provided _before_ attending the Hands-on lab.
 
@@ -112,7 +114,36 @@ In this task, you create a Text Analytics API, which will be integrated into you
 
 6. Ensure validation passes and then select **Create** on the `Review + create` tab.
 
-### Task 3: Create an Azure Machine Learning workspace
+### Task 3: Provision an Azure Container Registry
+
+In this task, you provision the Azure Container Registry where docker images will be pushed and pulled from different components of these lab. 
+
+1. Sign into [Azure portal](https://portal.azure.com) by using the credentials for your Azure subscription.
+
+2. In the upper-left corner of the Azure portal, select **+ Create a resource**.
+
+3. Use the search bar to find the **Container Registry**.
+
+4. Select **Container Registry**.
+
+5. In the **Container Registry** pane, select **Create** to begin.
+
+6. Provide the following information to configure your new workspace:
+
+   - **Subscription**: Select the Azure subscription that you want to use.
+
+   - **Resource group**: Use an existing resource group in your subscription or enter a name to create a new resource group. A resource group holds related resources for an Azure solution. In this example, we use **hands-on-lab**.
+
+   - **Registry name**: Enter a unique name that identifies your registry. In this example, we use **mlacr202203**. This name must be globally unique.
+
+   - **Location**: Select the location closest to your users and the data resources to create your workspace.
+
+   - **SKU**: Leave the default one (Standard).
+
+   ![The Azure Container Registry Create form is displayed populated with the aforementioned values. The Review + Create button is highlighted.](media/bhol-acr.png 'Create Azure Container Registry page')
+
+
+### Task 4: Create an Azure Machine Learning workspace
 
 In this task, you provision the Azure Machine Learning workspace you will use throughout this hands-on lab.
 
@@ -138,7 +169,7 @@ In this task, you provision the Azure Machine Learning workspace you will use th
 
    - **Location**: Select the location closest to your users and the data resources to create your workspace.
 
-   - **Container registry**: Use an existing container registry in your subscription or create a new container registry with `Standard SKU`.
+   - **Container registry**: Select an existing container registry in your subscription (We created on in previous step).
 
    ![The Machine Learning Create form is displayed populated with the aforementioned values. The Review + Create button is highlighted.](media/bhol-02.png 'Create Azure Machine Learning Workspace page')
 
@@ -154,9 +185,59 @@ In this task, you provision the Azure Machine Learning workspace you will use th
 
    ![The Machine Learning resource page is shown with Overview selected from the left menu, and the Launch now button highlighted in the Overview screen.](media/bhol-03.png 'Launch the Azure Machine Learning studio')
 
-### Task 4: Create a compute instance
+### Task 5: Create an Azure Kubernetes Service
 
-In this task, you add a compute resource to your Azure Machine Learning workspace.
+In this task, you will create an Azure Kubernetes Service that it will be used as a compute resource to your Azure Machine Learning workspace and also, the Kubernetes cluster for a set of microservices.
+
+
+1. Sign into [Azure portal](https://portal.azure.com) by using the credentials for your Azure subscription.
+
+2. In the upper-left corner of the Azure portal, select **+ Create a resource**.
+
+3. Use the search bar to find the **Kubernetes Service**.
+
+4. Select **Kubernetes Service**.
+
+5. In the **Kubernetes Service** pane, select **Create** to begin.
+
+   ![The AKS page displays with the Create button selected.](media/bhol-aks01.png 'Open Create Kubernetes service')
+
+6. Provide the following information to configure your new AKS. Leave defaults if not specified below:
+
+   - **Subscription**: Select the Azure subscription that you want to use.
+
+   - **Resource group**: Use an existing resource group in your subscription or enter a name to create a new resource group. A resource group holds related resources for an Azure solution. In this example, we use **hands-on-lab**.
+
+   - **Cluster preset configuration**: Leave default (**Standard ($$)**).
+  
+   - **Kubernetes cluster name**: Enter a unique name that identifies your registry. In this example, we use **mlaks**.
+
+   - **Region**: Select the location closest to your users and the data resources to create your workspace.
+
+   - **SKU**: Leave the default one (Standard).
+
+   - **Node count range**: Set a minimum of 3 nodes.
+
+   ![The Azure Kubernetes Service Create form is displayed populated with the aforementioned values. The Next: Node pools is highlighted.](media/bhol-aks02.png 'Create Azure Kubernetes Service page')
+
+7. Move to **Networking** tab and mark **Enable HTTP application routing**. 
+
+   NOTE: This will create a simple Kubernetes Ingress controller for testing purposes. Do not use this option in a production enviroment. [Learn more.](https://docs.microsoft.com/en-us/azure/aks/http-application-routing)
+
+8. Next, in the **Integrations** tab: 
+
+   - **Container registry**: Select the Azure Container Registry we previously created.
+   - **Container Monitoring**: You can keep it enabled, as recommendation for any production cluster. If for this lab you want to disable it to avoid some extra costs, martk the **Disabled** radio button.
+
+   And finally, create the AKS cluster.
+
+   ![The Azure Kubernetes Service final form is displayed populated with the aforementioned values. The Review + Create button is highlighted.](media/bhol-aks03.png 'Create Azure Kubernetes Service page')
+
+
+
+### Task 6: Configure AKS compute in Azure Machine Learning Studio
+
+TODO REVIEW AND MODIFY WITH AKS AS COMPUTE
 
 1. In the new Azure Machine Learning studio window, select **Create new** and then select **Compute instance** from the context menu.
 
@@ -171,7 +252,9 @@ In this task, you add a compute resource to your Azure Machine Learning workspac
 
 3. Select **Create** and wait for the Compute Instance to be ready. It takes approximately 3-5 minutes for the compute provisioning to complete.
 
-### Task 5: Import the lab notebooks
+### Task 7: Import the lab notebooks
+
+TODO REVIEW
 
 In this task, you import Jupyter notebooks from GitHub that you will use to complete the exercises in this hands-on lab.
 
@@ -195,7 +278,9 @@ In this task, you import Jupyter notebooks from GitHub that you will use to comp
 
 5. Wait for the `clone` command to finish importing the repo.
 
-### Task 6: Setup lab environment
+### Task 8: Setup lab environment
+
+TODO REVIEW
 
 1. From the terminal window run the following commands (assuming you are in the `mcw-csdl` folder):
 
