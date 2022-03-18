@@ -35,8 +35,9 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 4: Create an Azure Machine Learning workspace](#task-4-create-an-azure-machine-learning-workspace)
     - [Task 5: Create an Azure Kubernetes Service](#task-5-create-an-azure-kubernetes-service)
     - [Task 6: Configure AKS compute in Azure Machine Learning Studio](#task-6-configure-aks-compute-in-azure-machine-learning-studio)
-    - [Task 7: Import the lab notebooks](#task-7-import-the-lab-notebooks)
-    - [Task 8: Setup lab environment](#task-8-setup-lab-environment)
+    - [Task 7: Deploy a CosmosDB instance](#task-7-deploy-a-cosmosdb-instance)
+    - [Task 8: Import the lab notebooks](#task-8-import-the-lab-notebooks)
+    - [Task 9: Setup lab environment](#task-9-setup-lab-environment)
 
 <!-- /TOC -->
 
@@ -252,7 +253,11 @@ TODO REVIEW AND MODIFY WITH AKS AS COMPUTE
 
 3. Select **Create** and wait for the Compute Instance to be ready. It takes approximately 3-5 minutes for the compute provisioning to complete.
 
-### Task 7: Import the lab notebooks
+### Task 7: Deploy a CosmosDB instance
+
+   TODO 
+
+### Task 8: Import the lab notebooks
 
 TODO REVIEW
 
@@ -278,7 +283,7 @@ In this task, you import Jupyter notebooks from GitHub that you will use to comp
 
 5. Wait for the `clone` command to finish importing the repo.
 
-### Task 8: Setup lab environment
+### Task 9: Setup lab environment
 
 TODO REVIEW
 
