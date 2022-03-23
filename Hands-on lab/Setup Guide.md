@@ -33,8 +33,9 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 4: Create an Azure Machine Learning workspace](#task-4-create-an-azure-machine-learning-workspace)
     - [Task 5: Create an Azure Kubernetes Service](#task-5-create-an-azure-kubernetes-service)
     - [Task 6: Configure AKS compute in Azure Machine Learning Studio](#task-6-configure-aks-compute-in-azure-machine-learning-studio)
-    - [Task 7: Import the lab notebooks](#task-7-import-the-lab-notebooks)
-    - [Task 8: Setup lab environment](#task-8-setup-lab-environment)
+    - [Task 7: Deploy a CosmosDB instance](#task-7-deploy-a-cosmosdb-instance)
+    - [Task 8: Import the lab notebooks](#task-8-import-the-lab-notebooks)
+    - [Task 9: Setup lab environment](#task-9-setup-lab-environment)
 
 <!-- /TOC -->
 
@@ -248,15 +249,20 @@ In this task, you will create an Azure Kubernetes Service that it will be used a
 
 3. Select **Create** and wait for the Compute Instance to be ready. It takes approximately 3-5 minutes for the compute provisioning to complete.
 
+<<<<<<< HEAD:Hands-on lab/Setup Guide.md
 4. Within the Azure Machine Learning studio interface, under the **Manage** section on the left, select **Compute**, and go to **Inference Clusters**.
 
 ![Within the Azure Machine Learning studio interface, the sections are highlighted to select](media/attach-aks.png "Go to inference clusters")
 
 5. Click on **+ New** to create a new AKS or use an exisiting one previously created. You will need to assign a unique name within AML that will be used later on to select this specific cluster for deployment. 
 
-### Task 7: Import the lab notebooks
+### Task 7: Deploy a CosmosDB instance
 
-REEMPLAZAR LINK CON EL REPO DE DAVID
+   TODO 
+
+### Task 8: Import the lab notebooks
+
+TODO EEMPLAZAR LINK CON EL REPO DE DAVID
 
 In this task, you import Jupyter notebooks from GitHub that you will use to complete the exercises in this hands-on lab.
 
@@ -280,7 +286,7 @@ In this task, you import Jupyter notebooks from GitHub that you will use to comp
 
 5. Wait for the `clone` command to finish importing the repo.
 
-### Task 8: Setup lab environment
+### Task 9: Setup lab environment
 
 TODO REVIEW
 

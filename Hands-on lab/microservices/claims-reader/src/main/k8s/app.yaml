@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: claims-reader
-        image: appinnovation.azurecr.io/apps/claims-reader:0.0.2
+        image: ${IMAGE}
         ports:
         - containerPort: 8080
         env:
@@ -81,7 +81,7 @@ metadata:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-  - host: claims-reader.a87a364509b642d581f2.westeurope.aksapp.io
+  - host: claims-reader.${AKS_DOMAIN}
     http:
       paths:
       - path: /
