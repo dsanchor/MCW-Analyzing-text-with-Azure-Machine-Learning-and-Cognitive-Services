@@ -1,15 +1,14 @@
-![Microsoft Cloud Workshops](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/main/Media/ms-cloud-workshop.png 'Microsoft Cloud Workshops')
 
 <div class="MCWHeader1">
 Analyzing text with Azure Machine Learning and Cognitive Services
 </div>
 
 <div class="MCWHeader2">
-Hands-on lab step-by-step
+Deployment Step-by-Step
 </div>
 
 <div class="MCWHeader3">
-November 2021
+March 2022
 </div>
 
 Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
@@ -18,13 +17,13 @@ Microsoft may have patents, patent applications, trademarks, copyrights, or othe
 
 The names of manufacturers, products, or URLs are provided for informational purposes only, and Microsoft makes no representations and warranties, either expressed, implied, or statutory, regarding these manufacturers or the use of the products with any Microsoft technologies. The inclusion of a manufacturer or product does not imply endorsement of Microsoft of the manufacturer or product. Links may be provided to third-party sites. Such sites are not under the control of Microsoft and Microsoft is not responsible for the contents of any linked site or any link contained in a linked site, or any changes or updates to such sites. Microsoft is not responsible for webcasting or any other form of transmission received from any linked site. Microsoft is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement of Microsoft of the site or the products contained therein.
 
-© 2021 Microsoft Corporation. All rights reserved.
+© 2022 Microsoft Corporation. All rights reserved.
 
 Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/Usage/General.aspx> are trademarks of the Microsoft group of companies. All other trademarks are the property of their respective owners.
 
 **Contents**
 
-- [Analyzing text with Azure Machine Learning and Cognitive Services hands-on lab step-by-step](#analyzing-text-with-azure-machine-learning-and-cognitive-services-hands-on-lab-step-by-step)
+- [Analyzing text with Azure Machine Learning and Cognitive Services step-by-step](#analyzing-text-with-azure-machine-learning-and-cognitive-services-step-by-step)
   - [Abstract and learning objectives](#abstract-and-learning-objectives)
   - [Overview](#overview)
   - [Solution architecture](#solution-architecture)
@@ -44,24 +43,28 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
   - [Exercise 4: Completing the solution](#exercise-4-completing-the-solution)
     - [Task 1: Retrieve the Text Analytics API endpoint and key](#task-1-retrieve-the-text-analytics-api-endpoint-and-key)
     - [Task 2: Run notebook - 05 Cognitive Services](#task-2-run-notebook---05-cognitive-services)
-  - [After the hands-on lab](#after-the-hands-on-lab)
-    - [Task 1: Clean up lab resources](#task-1-clean-up-lab-resources)
+  - [After completion](#after-completion)
+    - [Task 1: Clean up resources](#task-1-clean-up-resources)
 
-# Analyzing text with Azure Machine Learning and Cognitive Services hands-on lab step-by-step
+# Analyzing text with Azure Machine Learning and Cognitive Services step-by-step
 
 ## Abstract and learning objectives
 
-In this hands-on lab, you implement a solution that combines both pre-built artificial intelligence (AI) in the form of various Cognitive Services with custom AI in the form of services built and deployed with Azure Machine Learning service. In the lab, you work with unstructured text and learning how to develop analytics pipelines for various problems such as text summarization, text classification, sentiment analysis, opinion mining, key phrase extraction, and language and PII detection. You learn how to build and train a deep neural net for text classification. You will also learn to build Automated Machine Learning models in Azure Machine Learning studio for the purposes of text classification. Finally, you learn how to deploy multiple kinds of predictive services using Azure Machine Learning and learn to integrate with the Text Analytics API from Cognitive Services.
+In this step-by-step, you will implement a solution that combines both pre-built artificial intelligence (AI) in the form of various Cognitive Services with custom AI in the form of services built and deployed with Azure Machine Learning service. You will work with unstructured text and learning how to develop analytics pipelines for various problems such as text summarization, text classification, sentiment analysis, opinion mining, key phrase extraction, and language and PII detection. You learn how to build and train a deep neural net for text classification. You will also learn to build Automated Machine Learning models in Azure Machine Learning studio for the purposes of text classification. Finally, you will learn how to deploy multiple kinds of predictive services using Azure Machine Learning and learn to integrate with the Text Analytics API from Cognitive Services. 
 
-At the end of this hands-on lab, you will be better able to present solutions leveraging Azure Machine Learning services and Cognitive Services.
+At the end of this implementation, you will be better able to present solutions leveraging Azure Machine Learning services and Cognitive Services.
+
+ANADIR LEARNING DE APPS
 
 ## Overview
 
-In this workshop, you help Contoso Ltd. build a proof of concept that shows how they can develop a solution that amplifies their agents' claims processing capabilities.
+In this workshop, you will help Contoso Ltd. build a proof of concept that shows how they can develop a solution that amplifies their agents' claims processing capabilities.
 
 ## Solution architecture
 
-The high-level architecture of the solution is illustrated in the diagram. The lab is performed within the context of a notebook running within Azure Machine Learning compute instance. Various notebooks are built to test the integration with the Cognitive Services listed, train custom ML services, and integrate the results in a simple user interface that shows the effect of processing the claim with all the AI services involved.
+The high-level architecture of the solution is illustrated in the diagram. The case is performed within the context of a notebook running within Azure Machine Learning compute instance. Various notebooks are built to test the integration with the Cognitive Services listed, train custom ML services, and integrate the results in a simple user interface that shows the effect of processing the claim with all the AI services involved.
+
+ANADIR PARTE DE APPS + MODIFICAR ARQUITECTURA 
 
 ![The High-level architectural solution begins with a Claim, which points to Claims submission WebApp. The WebApp then points to Text Analytics, and Containerized Services, which includes a Classification Service and a Summary Service that both processes claim text.](media/new_arch.png "High-level architectural solution")
 
@@ -122,9 +125,11 @@ In this exercise, you use Keras to construct and train a Deep Neural Network (DN
 
 3. Make sure you copy the scoring URI from the output of the last cell of this notebook. The scoring URI value is needed in the final notebook of this hands-on lab.
 
-## Exercise 3: Text classification with Azure Automated Machine Learning
+## (Optional) Exercise 3: Text classification with Azure Automated Machine Learning
 
 Duration: 75 minutes
+
+This exercise is not required for the solution but it provides an alternative for model deployment that focuses on no-code approach using AutoML
 
 Automated machine learning picks an algorithm and hyperparameters for you and generates a model ready for deployment. You can create and run automated machine learning experiments in code using the [Azure ML Python SDK](https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-configure-auto-train) or if you prefer a no code experience, you can also Create your automated machine learning experiments in the [Azure portal](https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-create-portal-experiments).
 
@@ -188,11 +193,11 @@ In this exercise, you learn how to create, run, and explore automated machine le
 
   ![The AutoML run details page is shown, with the run status and the models tab highlighted.](media/automl-06.png "AutoML run details")
 
-1. Select the **algorithm** with the best score on the primary metric `AUC weighted`.
+2. Select the **algorithm** with the best score on the primary metric `AUC weighted`.
 
   ![Models page that shows all the model pipelines that were trained during the AutoML run, with the best performing algorithm pipeline highlighted.](media/automl-07.png "Trained Models")
 
-1. Select the **Metrics** tab to review the various performance metrics and charts.
+3. Select the **Metrics** tab to review the various performance metrics and charts.
 
   ![Model metrics tab showing various model performance metrics and charts.](media/automl-08.png "Model Metrics")
 
@@ -225,12 +230,13 @@ In this task, you will retrieve the API key and endpoint URI associated with you
     ![Keys and Endpoint in highlighted and selected in the left-hand navigation menu. The copy buttons for Key 1 and Endpoint are highlighted.](media/text-analytics-keys-and-endpoint.png "Text Analytics Keys and Endpoint")
 
 ### Task 2: Run notebook - 05 Cognitive Services
+REVISAR 
 
 1. From within Azure Machine Learning Studio, navigate to the `Notebooks` section by selecting it from the left-hand navigation menu. Then select the notebook: **mcw-csdl/MCW-Analyzing-text-with-azure-machine-learning-and-cognitive-services/Hands-on lab/notebooks/05 Cognitive Services.ipynb**. This opens the notebook so you can read and execute the code it contains.
 
 2. Follow the steps within the notebook to complete the lab and view the result of combining Cognitive Services with your Azure Machine Learning Services.
 
-## After the hands-on lab
+## After the implementation
 
 Duration: 5 minutes
 
@@ -242,13 +248,13 @@ To avoid unexpected charges, it is recommended that you clean up all your lab re
 
    ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
 
-2. Select the `hands-on-lab-SUFFIX` resource group you created for this hands-on lab from the list of resource groups.
+2. Select the `rg-text-analytics-SUFFIX` resource group you created for this hands-on lab from the list of resource groups.
 
-    ![The hands-on-lab-SUFFIX resource group is highlighted in the list of resource groups.](media/resource-groups.png "Resource groups")
+    ![The rg-text-analytics-SUFFIX resource group is highlighted in the list of resource groups.](media/resource-groups.png "Resource groups")
 
 3. Select **Delete resource group** from the command bar.
 
-    ![Delete resource group is highlighted on the toolbar of the hands-on-lab-SUFFIX resource group.](media/delete-resource-group.png "Delete resource group")
+    ![Delete resource group is highlighted on the toolbar of the rg-text-analytics-SUFFIX resource group.](media/delete-resource-group.png "Delete resource group")
 
 4. In the confirmation dialog that appears, enter the name of the resource group, and select **Delete**.
 
@@ -258,4 +264,4 @@ To avoid unexpected charges, it is recommended that you clean up all your lab re
 
 6. When the Notification indicates success, the cleanup is complete.
 
-You should follow all steps provided _after_ attending the Hands-on lab.
+

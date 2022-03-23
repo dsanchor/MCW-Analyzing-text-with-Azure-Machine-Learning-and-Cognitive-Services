@@ -1,15 +1,13 @@
-![Microsoft Cloud Workshops](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/main/Media/ms-cloud-workshop.png 'Microsoft Cloud Workshops')
-
 <div class="MCWHeader1">
 Analyzing text with Azure Machine Learning and Cognitive Services
 </div>
 
 <div class="MCWHeader2">
-Before the hands-on lab setup guide
+Setup guide
 </div>
 
 <div class="MCWHeader3">
-November 2021
+March 2022
 </div>
 
 Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
@@ -18,7 +16,7 @@ Microsoft may have patents, patent applications, trademarks, copyrights, or othe
 
 The names of manufacturers, products, or URLs are provided for informational purposes only and Microsoft makes no representations and warranties, either expressed, implied, or statutory, regarding these manufacturers or the use of the products with any Microsoft technologies. The inclusion of a manufacturer or product does not imply endorsement of Microsoft of the manufacturer or product. Links may be provided to third party sites. Such sites are not under the control of Microsoft and Microsoft is not responsible for the contents of any linked site or any link contained in a linked site, or any changes or updates to such sites. Microsoft is not responsible for webcasting or any other form of transmission received from any linked site. Microsoft is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement of Microsoft of the site or the products contained therein.
 
-© 2021 Microsoft Corporation. All rights reserved.
+© 2022 Microsoft Corporation. All rights reserved.
 
 Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/Usage/General.aspx> are trademarks of the Microsoft group of companies. All other trademarks are property of their respective owners.
 
@@ -26,9 +24,9 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 <!-- TOC -->
 
-- [Analyzing text with Azure Machine Learning and Cognitive Services before the hands-on lab setup guide](#analyzing-text-with-azure-machine-learning-and-cognitive-services-before-the-hands-on-lab-setup-guide)
+- [Analyzing text with Azure Machine Learning and Cognitive Services setup guide](#analyzing-text-with-azure-machine-learning-and-cognitive-services-setup-guide)
   - [Requirements](#requirements)
-  - [Before the hands-on lab](#before-the-hands-on-lab)
+  - [Setup Guide](#Setup-guide)
     - [Task 1: Create a resource group](#task-1-create-a-resource-group)
     - [Task 2: Provision a Text Analytics API](#task-2-provision-a-text-analytics-api)
     - [Task 3: Provision an Azure Container Registry](#task-3-provision-an-azure-container-registry) 
@@ -40,7 +38,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 <!-- /TOC -->
 
-# Analyzing text with Azure Machine Learning and Cognitive Services before the hands-on lab setup guide
+# Analyzing text with Azure Machine Learning and Cognitive Services setup guide
 
 ## Requirements
 
@@ -49,11 +47,11 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
    - Trial subscriptions will not work. You will run into issues with Azure resource quota limits.
    - Subscriptions with access limited to a single resource group will not work. You need the ability to deploy multiple resource groups.
 
-## Before the hands-on lab
+## Setup guide
 
 Duration: 45 minutes
 
-In this exercise, you set up your environment for use in the rest of the hands-on lab. You should follow all steps provided _before_ attending the Hands-on lab.
+In this exercise, you set up your environment for use in the rest of the deployment. You should follow all steps provided in the setup guide.
 
 > **Important**: Many Azure resources require globally unique names. Throughout these steps, the word "SUFFIX" appears as part of resource names. You should replace this with your Microsoft alias, initials, or other value to ensure uniquely named resources.
 
@@ -69,9 +67,9 @@ In this exercise, you set up your environment for use in the rest of the hands-o
 
 3. On the Create a resource group **Basics** tab, enter the following:
 
-   - **Subscription**: Select the subscription you are using for this hands-on lab.
-   - **Resource group**: Enter `hands-on-lab-SUFFIX` as the name of the new resource group, where SUFFIX is your Microsoft alias, initials, or other value to ensure uniquely named resources.
-   - **Region**: Select the region you are using for this hands-on lab.
+   - **Subscription**: Select the subscription you are using.
+   - **Resource group**: Enter `rg-text-analytics-SUFFIX` as the name of the new resource group, where SUFFIX is your Microsoft alias, initials, or other value to ensure uniquely named resources.
+   - **Region**: Select the region where you want to deploy your resources.
 
    ![The values specified above are entered into the Create a resource group Basics tab.](media/create-resource-group.png "Create resource group")
 
@@ -97,12 +95,12 @@ In this task, you create a Text Analytics API, which will be integrated into you
 
     Project details:
 
-    - **Subscription**: Select the subscription you are using for this hands-on lab.
-    - **Resource group**: Select the hands-on-lab-SUFFIX resource group from the dropdown list.
+    - **Subscription**: Select the subscription you are using.
+    - **Resource group**: Select the rg-text-analytics-SUFFIX resource group from the dropdown list.
 
     Instance Details:
 
-    - **Region**: Select the region you used for the hands-on-lab-SUFFIX resource group.
+    - **Region**: Select the region you used for the rg-text-analytics-SUFFIX resource group.
     - **Name:** Provide a unique name for this instance, such as ta-SUFFIX.
     - **Pricing tier**: Free F0 (5K Transactions per 30 days).
     - **Legal terms**: Checked
@@ -114,7 +112,7 @@ In this task, you create a Text Analytics API, which will be integrated into you
 
 6. Ensure validation passes and then select **Create** on the `Review + create` tab.
 
-### Task 3: Provision an Azure Container Registry
+### Task 3: Provision an Azure Container Registry 
 
 In this task, you provision the Azure Container Registry where docker images will be pushed and pulled from different components of these lab. 
 
@@ -145,7 +143,7 @@ In this task, you provision the Azure Container Registry where docker images wil
 
 ### Task 4: Create an Azure Machine Learning workspace
 
-In this task, you provision the Azure Machine Learning workspace you will use throughout this hands-on lab.
+In this task, you provision the Azure Machine Learning workspace.
 
 1. Sign into [Azure portal](https://portal.azure.com) by using the credentials for your Azure subscription.
 
@@ -163,7 +161,7 @@ In this task, you provision the Azure Machine Learning workspace you will use th
 
    - **Subscription**: Select the Azure subscription that you want to use.
 
-   - **Resource group**: Use an existing resource group in your subscription or enter a name to create a new resource group. A resource group holds related resources for an Azure solution. In this example, we use **hands-on-lab**.
+   - **Resource group**: Use an existing resource group in your subscription or enter a name to create a new resource group. A resource group holds related resources for an Azure solution.
 
    - **Workspace name**: Enter a unique name that identifies your workspace. In this example, we use **ml-wksp**. Names must be unique across the resource group. Use a name that's easy to recall and to differentiate from workspaces created by others.
 
@@ -235,9 +233,7 @@ In this task, you will create an Azure Kubernetes Service that it will be used a
 
 
 
-### Task 6: Configure AKS compute in Azure Machine Learning Studio
-
-TODO REVIEW AND MODIFY WITH AKS AS COMPUTE
+### Task 6: Create compute instance and configure AKS compute in Azure Machine Learning Studio
 
 1. In the new Azure Machine Learning studio window, select **Create new** and then select **Compute instance** from the context menu.
 
@@ -252,9 +248,15 @@ TODO REVIEW AND MODIFY WITH AKS AS COMPUTE
 
 3. Select **Create** and wait for the Compute Instance to be ready. It takes approximately 3-5 minutes for the compute provisioning to complete.
 
+4. Within the Azure Machine Learning studio interface, under the **Manage** section on the left, select **Compute**, and go to **Inference Clusters**.
+
+![Within the Azure Machine Learning studio interface, the sections are highlighted to select](media/attach-aks.png "Go to inference clusters")
+
+5. Click on **+ New** to create a new AKS or use an exisiting one previously created. You will need to assign a unique name within AML that will be used later on to select this specific cluster for deployment. 
+
 ### Task 7: Import the lab notebooks
 
-TODO REVIEW
+REEMPLAZAR LINK CON EL REPO DE DAVID
 
 In this task, you import Jupyter notebooks from GitHub that you will use to complete the exercises in this hands-on lab.
 
@@ -272,8 +274,8 @@ In this task, you import Jupyter notebooks from GitHub that you will use to comp
   
 4. Run the following commands in order in the terminal window:
 
-   - `mkdir mcw-csdl`
-   - `cd mcw-csdl`
+   - `mkdir ta-repo-csdl`
+   - `cd ta-repo-csdl`
    - `git clone https://github.com/microsoft/MCW-Analyzing-text-with-azure-machine-learning-and-cognitive-services.git`
 
 5. Wait for the `clone` command to finish importing the repo.
@@ -282,7 +284,7 @@ In this task, you import Jupyter notebooks from GitHub that you will use to comp
 
 TODO REVIEW
 
-1. From the terminal window run the following commands (assuming you are in the `mcw-csdl` folder):
+1. From the terminal window run the following commands (assuming you are in the `ta-repo-csdl` folder):
 
    - `cd "MCW-Analyzing-text-with-azure-machine-learning-and-cognitive-services/Hands-on lab/notebooks"`
    - `conda activate azureml_py38`
@@ -291,4 +293,4 @@ TODO REVIEW
 
     > Note: You can safely ignore any dependency errors during installation.
 
-You should follow all these steps provided *before* attending the Hands-on lab.
+
