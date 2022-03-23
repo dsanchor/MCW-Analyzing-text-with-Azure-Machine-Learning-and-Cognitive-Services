@@ -1,5 +1,7 @@
 package com.microsoft.csu.claims.model;
 
+import java.sql.Timestamp;
+
 import com.azure.spring.data.cosmos.core.mapping.Container;
 
 import org.springframework.data.annotation.Id;
@@ -20,18 +22,21 @@ public class Claim {
 
     private String [] keyPhrases;
 
+    private Timestamp creationTime;
+
     public Claim(){
         
     }
 
     public Claim(String id, String claim, String claimSummary, String claimType, Sentiment sentiment,
-            String[] keyPhrases) {
+            String[] keyPhrases, Timestamp creationTime) {
         this.id = id;
         this.claim = claim;
         this.claimSummary = claimSummary;
         this.claimType = claimType;
         this.sentiment = sentiment;
         this.keyPhrases = keyPhrases;
+        this.creationTime = creationTime;
     }
 
     public String getId() {
@@ -81,7 +86,13 @@ public class Claim {
     public void setKeyPhrases(String[] keyPhrases) {
         this.keyPhrases = keyPhrases;
     }
- 
 
+    public Timestamp getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Timestamp creationTime) {
+        this.creationTime = creationTime;
+    }
 
 }

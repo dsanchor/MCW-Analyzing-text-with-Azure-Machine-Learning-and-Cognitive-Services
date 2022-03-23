@@ -2,6 +2,7 @@ package com.microsoft.csu.claims.service;
 
 import reactor.core.publisher.Mono;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,8 @@ public class ClaimServiceImpl implements ClaimService {
         Sentiment sentiment = sentimentAnalizerService.getSentiment(inputClaim);
         String[] keyphrases = keyphrasesService.getKeyPhrases(inputClaim);
 
-        Claim claim = new Claim(id, inputClaim, summary , claimType.toString().toLowerCase(), sentiment, keyphrases);
+        Claim claim = new Claim(id, inputClaim, summary , claimType.toString().toLowerCase(), 
+            sentiment, keyphrases, new Timestamp(System.currentTimeMillis()));
 
         final Mono<Claim> saveUserMono = repository.save(claim);
 

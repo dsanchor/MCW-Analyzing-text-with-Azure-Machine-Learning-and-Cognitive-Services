@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
       - name: claims-manager
-        image: appinnovation.azurecr.io/apps/claims-manager:0.0.4
+        image: ${IMAGE}
         ports:
         - containerPort: 8080
         env:
@@ -129,7 +129,7 @@ metadata:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-  - host: claims-manager.a87a364509b642d581f2.westeurope.aksapp.io
+  - host: claims-manager.${AKS_DOMAIN}
     http:
       paths:
       - path: /
