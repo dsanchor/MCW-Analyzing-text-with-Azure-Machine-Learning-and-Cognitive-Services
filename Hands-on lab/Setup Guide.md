@@ -249,7 +249,6 @@ In this task, you will create an Azure Kubernetes Service that it will be used a
 
 3. Select **Create** and wait for the Compute Instance to be ready. It takes approximately 3-5 minutes for the compute provisioning to complete.
 
-<<<<<<< HEAD:Hands-on lab/Setup Guide.md
 4. Within the Azure Machine Learning studio interface, under the **Manage** section on the left, select **Compute**, and go to **Inference Clusters**.
 
 ![Within the Azure Machine Learning studio interface, the sections are highlighted to select](media/attach-aks.png "Go to inference clusters")
