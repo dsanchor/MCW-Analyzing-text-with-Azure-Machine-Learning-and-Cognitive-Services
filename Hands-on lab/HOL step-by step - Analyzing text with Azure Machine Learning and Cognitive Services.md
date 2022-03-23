@@ -66,7 +66,7 @@ The high-level architecture of the solution is illustrated in the diagram. The c
 
 ANADIR PARTE DE APPS + MODIFICAR ARQUITECTURA 
 
-![The High-level architectural solution begins with a Claim, which points to Claims submission WebApp. The WebApp then points to Text Analytics, and Containerized Services, which includes a Classification Service and a Summary Service that both processes claim text.](media/new_arch.png "High-level architectural solution")
+![The High-level architectural solution begins with a Claim, which points to Claims submission WebApp. The WebApp then points to Text Analytics, and Containerized Services, which includes a Classification Service and a Summary Service that both processes claim text.](media/new_arch_extended.png "High-level architectural solution")
 
 ## Requirements
 

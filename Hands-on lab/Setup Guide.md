@@ -258,7 +258,44 @@ In this task, you will create an Azure Kubernetes Service that it will be used a
 
 ### Task 7: Deploy a CosmosDB instance
 
-   TODO 
+In this task, you will create an CosmosDb instance with a single database, that will contain a Claims container to hold all the information of future claims.
+
+
+1. Sign into [Azure portal](https://portal.azure.com) by using the credentials for your Azure subscription.
+
+2. In the upper-left corner of the Azure portal, select **+ Create a resource**.
+
+3. Use the search bar to find the **Cosmos Db**.
+
+4. Select **Azure Cosmos Db**.
+
+5. In the **Azure Cosmos Db** pane, select **Create** to begin.
+
+   ![The Cosmos Db page displays with the Create button selected.](media/bhol-cosmos01.png 'Open Create Azure Cosmos Db service')
+
+6. Then, within the **Select API option**, select **Core (SQL) - Recommended** and **Create**.
+
+   ![The Cosmos Db select API  page displays with the Create button selected.](media/bhol-cosmos02.png 'Open Select API option')
+
+7. Provide the following information to configure your new Cosmos Db instance   :
+
+   - **Subscription**: Select the Azure subscription that you want to use.
+
+   - **Resource group**: Use an existing resource group in your subscription or enter a name to create a new resource group. A resource group holds related resources for an Azure solution. In this example, we use **hands-on-lab**.
+
+   - **Account name**: Set **claimscoresql**.
+
+   - **Location**: Select the location closest to your users and the data resources to create your workspace.
+
+   - **Capacity mode**: To simplify configuration, set **Serverless** mode. To learn more about **Capacity modes**, have a look at the [official documentation](https://docs.microsoft.com/en-us/azure/cosmos-db/throughput-serverless).
+
+
+   ![The Azure CosmosDb Create form is displayed populated with the aforementioned values.](media/bhol-cosmos03.png 'Create Azure CosmosDb page')
+
+8. Select **Review + Create**.
+
+9. On the **Review + create** tab, ensure the Validation passed message is displayed and then select **Create**.
+
 
 ### Task 8: Import the lab notebooks
 
