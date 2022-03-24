@@ -430,7 +430,7 @@ sed -e "s/\${AKS_DOMAIN}/$AKS_DOMAIN/g" \
     claims-reader/src/main/k8s/app.yaml | kubectl apply -f - -n appinnovation
 ```
 
-4. You can check under wich hosts these two microservices are exposed by running the following command:
+4. You can check under which hosts these two microservices are exposed by running the following command:
 
 ```
 <youruser>@Azure:~/sources/Hands-on lab/microservices$ kubectl get ingress -n appinnovation
