@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
       - name: claims-manager
-        image: ${IMAGE}
+        image: docker.io/sancheski/claims-manager:1.0.0
         ports:
         - containerPort: 8080
         env:

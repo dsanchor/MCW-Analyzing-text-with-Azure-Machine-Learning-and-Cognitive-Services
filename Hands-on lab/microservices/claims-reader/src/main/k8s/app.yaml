@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: claims-reader
-        image: ${IMAGE}
+        image: docker.io/sancheski/claims-reader:1.0.0
         ports:
         - containerPort: 8080
         env:
