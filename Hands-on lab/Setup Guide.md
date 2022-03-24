@@ -209,7 +209,7 @@ In this task, you will create an Azure Kubernetes Service that it will be used a
 
    - **Cluster preset configuration**: Leave default (**Standard ($$)**).
   
-   - **Kubernetes cluster name**: Enter a unique name that identifies your registry. In this example, we use **mlaks**.
+   - **Kubernetes cluster name**: Enter a unique name that identifies your cluster. In this example, we use **mlaks**.
 
    - **Region**: Select the location closest to your users and the data resources to create your workspace.
 

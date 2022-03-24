@@ -50,11 +50,13 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 ## Abstract and learning objectives
 
-In this step-by-step, you will implement a solution that combines both pre-built artificial intelligence (AI) in the form of various Cognitive Services with custom AI in the form of services built and deployed with Azure Machine Learning service. You will work with unstructured text and learning how to develop analytics pipelines for various problems such as text summarization, text classification, sentiment analysis, opinion mining, key phrase extraction, and language and PII detection. You learn how to build and train a deep neural net for text classification. You will also learn to build Automated Machine Learning models in Azure Machine Learning studio for the purposes of text classification. Finally, you will learn how to deploy multiple kinds of predictive services using Azure Machine Learning and learn to integrate with the Text Analytics API from Cognitive Services. 
+In this step-by-step, you will implement a solution that combines both pre-built artificial intelligence (AI) in the form of various Cognitive Services with custom AI in the form of services built and deployed with Azure Machine Learning service. You will work with unstructured text and learning how to develop analytics pipelines for various problems such as text summarization, text classification, sentiment analysis and key phrase extraction. You learn how to build and train a deep neural net for text classification. You will also learn to build Automated Machine Learning models in Azure Machine Learning studio for the purposes of text classification. Finally, you will learn how to deploy multiple kinds of predictive services using Azure Machine Learning and learn to integrate with the Text Analytics API from Cognitive Services. 
 
 At the end of this implementation, you will be better able to present solutions leveraging Azure Machine Learning services and Cognitive Services.
 
-ANADIR LEARNING DE APPS
+On the other hand, you will have the chance to deploy a set of microservices to a k8s cluster. These microservices will interact with a CosmosDB instance, where data will be stored and also to above mentioned services, such as Text Analytics APIs and trained models.
+
+Finally, you will deploy a PowerApp that will consume these microservices APIs to create a full E2E scenario.
 
 ## Overview
 
@@ -64,7 +66,7 @@ In this workshop, you will help Contoso Ltd. build a proof of concept that shows
 
 The high-level architecture of the solution is illustrated in the diagram. The case is performed within the context of a notebook running within Azure Machine Learning compute instance. Various notebooks are built to test the integration with the Cognitive Services listed, train custom ML services, and integrate the results in a simple user interface that shows the effect of processing the claim with all the AI services involved.
 
-ANADIR PARTE DE APPS + MODIFICAR ARQUITECTURA 
+Also, there will be two microservices present in the architecture that will offer a set of APIs to possible consumers. One consumer in this architecture is the Power App, that will provide the user with a simple but complete UI to get a great user experience during the demonstration of every capability of the whole architecture.
 
 ![The High-level architectural solution begins with a Claim, which points to Claims submission WebApp. The WebApp then points to Text Analytics, and Containerized Services, which includes a Classification Service and a Summary Service that both processes claim text.](media/new_arch_extended.png "High-level architectural solution")
 
@@ -264,4 +266,173 @@ To avoid unexpected charges, it is recommended that you clean up all your lab re
 
 6. When the Notification indicates success, the cleanup is complete.
 
+TODO put it in the right place and review TBD tags
 
+## Exercise X: Deploy microservices in AKS
+
+Duration: 30 minutes
+
+In this exercise, you wll deploy both **claims-manager** and **claims-reader** microservices to the existing Kubernetes cluster. We will use the **Azure cloud shell**, which has all the prerequired tooling install.
+
+### Task 0: Pre-requirements
+
+1. In the [Azure portal](https://portal.azure.com), open a new **Azure Cloud Shell**. Do not forget to use **bash**:
+
+![Open a new cloud shell](media/open-cloudshell.png "Open cloud shell")
+
+2. Clone resources repository in the home directory:
+
+```
+<youruser>@Azure:~$ git clone https://github.com/dsanchor/MCW-Analyzing-text-with-Azure-Machine-Learning-and-Cognitive-Services.git sources
+```
+
+3. Once cloned, move to the directory where we have the source code for the  microservices:
+
+```
+<youruser>@Azure:~$ cd sources/Hands-on\ lab/microservices/
+```
+
+### Task 1: Init configuration file
+
+Before deploying both microservices, we will require some configuration in order to connect:
+
+- CosmosDb instance
+- Summarizer service
+- Classifier service
+- Text analytics: Sentiment Analysis and Key Phrase Extraction
+
+The following diagram summarizes all the interactions between the microservices and the above mentioned services:
+
+![Microservices flow](media/microservices-flow.png "Microservices Flow")
+
+1. Validate that an empty **config.properties** file has been provided:
+
+```
+<youruser>@Azure:~/sources/Hands-on lab/microservices$ cat config.properties 
+
+AZURE_COSMOS_KEY= 
+AZURE_COSMOS_URI=
+AZURE_COSMOS_DATABASE= 
+MANAGER_CLASSIFIER_URL= 
+MANAGER_CLASSIFIER_PATH= 
+MANAGER_CLASSIFIER_KEY= 
+MANAGER_SUMMARIZER_URL=
+MANAGER_SUMMARIZER_PATH=
+MANAGER_SUMMARIZER_KEY=
+MANAGER_TEXTANALYTICS_KEY=
+MANAGER_TEXTANALYTICS_ENDPOINT=
+AKS_DOMAIN=
+````
+
+2. To simplify edition of this file, let's open an editor within the **Azure Cloud Shell** by clicking in the **{}** icon. Then, navigate to the **config.properties** file and open it.
+
+
+![Open an editor l](media/open-editor.png "Open cloud shell editor")
+
+3. Get the **CosmosDB** attributes. To do, select your **CosmosDb** instance and under **Settings**, click on **Keys**. Copy both **URI** and **PRIMARY KEY**. For the database name, click in **Data Explorer** and get the name of your database right below the **DATA** label. It is very likely that the database name is **ClaimsDb**.
+
+4. For the **Classifier** and **Summarizer** attributes, select your **Machine Learning** instance and open the **Azure Machine Learning Studio**.  For each **Endpoint** (classifier and summarizer), move to the **Consume** tab and get the URL, PATH and KEY. Notice that you will get the **REST endpoint**, see next picture for more details, where the **URL** is underlined in red and **PATH** in yellow. 
+
+![AML endpoints](media/aml-endpoints.png "AML endpoints")
+
+5. Now, you must get the **KEY** and **ENDPOINT** for the **Text Analytics** service. Open your **Cognitive Service for Language** and on the **Resource Management** pane, click on **Keys and Endpoints**. Copy both the **KEY 1** and **Endpoint** values and set them in the **config.properties** file accordingly.
+
+6. And finally, get the **AKS dns zone** that will be used to expose all of our apps. Ensure you use the correct **Resource group** name and **AKS** cluster. In this example command, we use the ones mentioned in the **Setup Guide**:
+
+```
+az aks show -n mlaks -g hands-on-lab --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table
+```
+
+Take note of the output and place it in the **AKS_DOMAIN** property. 
+
+**Example of a config.properties** with all values:
+
+```
+AZURE_COSMOS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+AZURE_COSMOS_URI="https://claims.documents.azure.com:443/"  
+AZURE_COSMOS_DATABASE="ClaimsDb" 
+MANAGER_CLASSIFIER_URL="http://1.2.3.4:80" 
+MANAGER_CLASSIFIER_PATH="/api/v1/service/claimclassservice-v2/score" 
+MANAGER_CLASSIFIER_KEY="yyyyyyyyyyyyy" 
+MANAGER_SUMMARIZER_URL="http://1.2.3.4:80" 
+MANAGER_SUMMARIZER_PATH="/api/v1/service/summarizer-v2/score" 
+MANAGER_SUMMARIZER_KEY="zzzzzzzzzzzzz" 
+MANAGER_TEXTANALYTICS_KEY=wwwwwwwwwwwwwwwwwwwwwwww 
+MANAGER_TEXTANALYTICS_ENDPOINT="https://data-app-text.cognitiveservices.azure.com/"
+AKS_DOMAIN=18f89dfed879865pdf.westeurope.aksapp.io 
+```
+
+7. Just to avoid some problems during the process of variable substitution using **sed** in next steps, let`s escape the '/' char:
+
+```
+<youruser>@Azure:~/sources/Hands-on lab/microservices$ sed 's/\//\\\//g' config.properties 
+```
+
+8. And finally, set every property in the file as Enviroment variable:
+
+```
+<youruser>@Azure:~/sources/Hands-on lab/microservices$ source config.properties 
+```
+
+### Task 2: Deploy microservices to AKS
+
+1. Get AKS credentials. Ensure you use the correct **Resource group** name and **AKS** cluster. In this example command, we use the ones mentioned in the **Setup Guide**::
+
+```
+<youruser>@Azure:~/sources/Hands-on lab/microservices$ az aks get-credentials -n mlaks -g hands-on-lab
+
+The behavior of this command has been altered by the following extension: aks-preview
+Merged "mlaks" as current context in /home/<youruser>/.kube/config
+```
+
+2. Create a **namespace**:
+
+```
+<youruser>@Azure:~/sources/Hands-on lab/microservices$ kubectl create namespace appinnovation
+
+namespace/appinnovation created
+
+```
+
+3. Deploy **claims-manager** and **claims-reader** microservices. The base template containing the k8s descriptors for each microservice is under **src/main/k8s** folder. Feel free to have a look at the content of the **app.yaml** to understand what will be created in **AKS**. 
+
+Let's start with the **claims-manager** microservice. We will use all the 'Environment Variables' we previously initialized as a replacement in the original **app.yaml** k8s descriptors:
+
+Execute:
+```
+sed -e "s/\${AKS_DOMAIN}/$AKS_DOMAIN/g" \
+    -e "s/\${AZURE_COSMOS_KEY}/$AZURE_COSMOS_KEY/g" \
+    -e "s/\${AZURE_COSMOS_URI}/$AZURE_COSMOS_URI/g" \
+    -e "s/\${AZURE_COSMOS_DATABASE}/$AZURE_COSMOS_DATABASE/g" \
+    -e "s/\${MANAGER_CLASSIFIER_URL}/$MANAGER_CLASSIFIER_URL/g" \
+    -e "s/\${MANAGER_CLASSIFIER_PATH}/$MANAGER_CLASSIFIER_PATH/g" \
+    -e "s/\${MANAGER_CLASSIFIER_KEY}/$MANAGER_CLASSIFIER_KEY/g" \
+    -e "s/\${MANAGER_SUMMARIZER_URL}/$MANAGER_SUMMARIZER_URL/g" \
+    -e "s/\${MANAGER_SUMMARIZER_PATH}/$MANAGER_SUMMARIZER_PATH/g" \
+    -e "s/\${MANAGER_SUMMARIZER_KEY}/$MANAGER_SUMMARIZER_KEY/g" \
+    -e "s/\${MANAGER_TEXTANALYTICS_KEY}/$MANAGER_TEXTANALYTICS_KEY/g" \
+    -e "s/\${MANAGER_TEXTANALYTICS_ENDPOINT}/$MANAGER_TEXTANALYTICS_ENDPOINT/g" \
+    claims-manager/src/main/k8s/app.yaml | kubectl apply -f - -n appinnovation
+```
+
+And then, perform the same action for the **claims-reader** microservice:
+
+```
+sed -e "s/\${AKS_DOMAIN}/$AKS_DOMAIN/g" \
+    -e "s/\${AZURE_COSMOS_KEY}/$AZURE_COSMOS_KEY/g" \
+    -e "s/\${AZURE_COSMOS_URI}/$AZURE_COSMOS_URI/g" \
+    -e "s/\${AZURE_COSMOS_DATABASE}/$AZURE_COSMOS_DATABASE/g" \
+    claims-reader/src/main/k8s/app.yaml | kubectl apply -f - -n appinnovation
+```
+
+4. You can check under wich hosts these two microservices are exposed by running the following command:
+
+```
+<youruser>@Azure:~/sources/Hands-on lab/microservices$ kubectl get ingress -n appinnovation
+```
+
+Feel free to perform a simple test by querying all the existing 'claims' using the **claims-reader** service (note that there is not any claim in the system yet.. you should get an empty array):
+
+```
+<youruser>@Azure:~/sources/Hands-on lab/microservices$ curl -v  claims-reader.${AKS_DOMAIN}/claims
+```
