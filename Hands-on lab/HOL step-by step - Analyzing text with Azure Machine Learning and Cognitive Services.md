@@ -276,7 +276,7 @@ TODO put it in the right place and review TBD tags
 
 Duration: 30 minutes
 
-In this exercise, you wll deploy both **claims-manager** and **claims-reader** microservices to the existing Kubernetes cluster. We will use the **Azure cloud shell**, which has all the prerequired tooling install.
+In this exercise, you wll deploy both **claims-manager** and **claims-reader** microservices to the existing Kubernetes cluster. We will use the **Azure cloud shell**, which has all the prerequired tooling installed.
 
 ### Task 0: Pre-requirements
 
@@ -298,7 +298,7 @@ In this exercise, you wll deploy both **claims-manager** and **claims-reader** m
 
 ### Task 1: Init configuration file
 
-Before deploying both microservices, we will require some configuration in order to connect:
+Before deploying both microservices, we will require some configuration in order to connect to:
 
 - CosmosDb instance
 - Summarizer service
@@ -309,7 +309,8 @@ The following diagram summarizes all the interactions between the microservices 
 
 ![Microservices flow](media/microservices-flow.png "Microservices Flow")
 
-1. Validate that an empty **config.properties** file has been provided:
+
+1. Let's start by  validating that an empty **config.properties** file exists and has been properly cloned:
 
 ```
 <youruser>@Azure:~/sources/Hands-on lab/microservices$ cat config.properties 
