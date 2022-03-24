@@ -45,6 +45,10 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 2: Run notebook - 05 Cognitive Services](#task-2-run-notebook---05-cognitive-services)
   - [After completion](#after-completion)
     - [Task 1: Clean up resources](#task-1-clean-up-resources)
+  - [Exercise X: Deploy microservices in AKS](#exercise-x-deploy-microservices-in-aks)
+    - [Task 0: Pre-requirements](#task-0-pre-requirements)
+    - [Task 1: Init configuration file](#task-1-init-configuration-file)
+    - [Task 2: Deploy microservices to AKS](#task-2-deploy-microservices-to-aks)
 
 # Analyzing text with Azure Machine Learning and Cognitive Services step-by-step
 
