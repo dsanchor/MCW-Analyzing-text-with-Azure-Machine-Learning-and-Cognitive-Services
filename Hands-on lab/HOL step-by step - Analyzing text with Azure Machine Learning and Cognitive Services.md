@@ -478,8 +478,11 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
  a. Home > Transform Data > Data Source Settings
  
   i. Data sources in current files
+  
   ii. Select Cosmos DB
+  
   iii. Edit Permissions > Edit Credentials
+  
   iv. Introduce Cosmos DB Account key and save
    
  b. Save report to current file
@@ -497,6 +500,7 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
  b. Menu > Claim App Workspace
     
   i. New > Upload a file
+  
   ii. Import powerBI_claimApp.pbix to workspace
 
 
@@ -507,15 +511,21 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
  a. Menu > FLows 
     
   i. Edit Claim_App_GETALLCLAIMS
+  
   ii. Open the HTTP connector step in the flow
+  
   iii. Modify the connector Uri to your AKS public endpoint
+  
   iv. Save flow and exit
+  
   v. Repeat for Claim_App_POSTCLAIM
   
  b. Menu > Apps > Claim_App > Edit
     
   i. Screens > Claim Dashboard
+  
   ii. Select the Power BI object and open the connection pane
+  
   iii. Select your newly created workspace and connect to the Claim Dashboard report and tile
        
  c. File > Save and Publish
