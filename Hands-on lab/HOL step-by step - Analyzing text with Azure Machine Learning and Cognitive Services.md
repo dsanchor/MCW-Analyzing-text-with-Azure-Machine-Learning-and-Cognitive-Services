@@ -476,7 +476,7 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
 1. Download the powerBI_claimApp.pbix from the git content folder and open in Power BI Desktop
 
  a. Home > Transform Data > Data Source Settings
-    
+ 
   i. Data sources in current files
   ii. Select Cosmos DB
   iii. Edit Permissions > Edit Credentials
