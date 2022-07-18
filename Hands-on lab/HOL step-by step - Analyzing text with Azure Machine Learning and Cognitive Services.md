@@ -45,10 +45,15 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 2: Run notebook - 05 Cognitive Services](#task-2-run-notebook---05-cognitive-services)
   - [After completion](#after-completion)
     - [Task 1: Clean up resources](#task-1-clean-up-resources)
-  - [Exercise X: Deploy microservices in AKS](#exercise-x-deploy-microservices-in-aks)
+  - [Exercise 5: Deploy microservices in AKS](#exercise-x-deploy-microservices-in-aks)
     - [Task 0: Pre-requirements](#task-0-pre-requirements)
     - [Task 1: Init configuration file](#task-1-init-configuration-file)
     - [Task 2: Deploy microservices to AKS](#task-2-deploy-microservices-to-aks)
+  - [Exercise 6: Deploying your Power App](#exercise-y-deploying-your-power-app)
+    - [Task 1: Import Canvas App](#task-1-import-canvas-app)
+    - [Task 2: Prepare and import Power BI Dashboard](#task-2-prepare-and-import-power-bi-dashboard)
+    - [Task 3: Configure canvas app](#task-3-configure-canvas-app)
+  
 
 # Analyzing text with Azure Machine Learning and Cognitive Services step-by-step
 
@@ -280,7 +285,7 @@ To avoid unexpected charges, it is recommended that you clean up all your lab re
 
 TODO put it in the right place and review TBD tags
 
-## Exercise X: Deploy microservices in AKS
+## Exercise 5: Deploy microservices in AKS
 
 Duration: 30 minutes
 
@@ -450,86 +455,64 @@ Feel free to perform a simple test by querying all the existing 'claims' using t
 <youruser>@Azure:~/sources/Hands-on lab/microservices$ curl -v  claims-reader.${AKS_DOMAIN}/claims
 ```
 
-## Exercise Y: Deploying your Power App
+## Exercise 6: Deploying your Power App
 
 Duration: 40 minutes
 
 In this exercise, you wll import the Claim_App.zip canvas app into your environment. We will navigate through the Power Apps [site](https://make.powerapps.com/), Power Apps studio and PowerBI [site](https://app.powerbi.com/) to complete this section. 
 
+
 ### Task 1: Import canvas app
 
-1. Navigate to https://make.powerapps.com/
-  
-    a. Menu > Apps > Import Canvas App
-    
-  i. Upload zip package: Claim_App
-  
-  ii. Import Setup: Create as new for the PowerApp and proposed flows
-  
-  iii. Select Import
+Navigate to https://make.powerapps.com/
 
-    b. Menu > Flows
-    
-  i. Claim_App_GETALLCLAIMS (open options) and Turn ON
-  
-  ii. Claim_App_POSTCLAIM (open options) and Turn ON
+1. Check you are in the desired Environment
+2. Menu > Apps > Import Canvas App
+3. Upload zip package: Claim_App
+4. Import Setup: Create as new for the PowerApp and proposed flows
+5. Select Import
+
+Now, we must acrivate the imported flows from our canvas app.
+
+6. Menu > Flows
+7. Claim_App_GETALLCLAIMS (open options) and Turn ON
+8. Claim_App_POSTCLAIM (open options) and Turn ON
+      
       
 ### Task 2: Prepare and import Power BI Dashboard
       
 1. Download the powerBI_claimApp.pbix from the git content folder and open in Power BI Desktop
+2. Home > Transform Data > Open the Data Source Settings
+3. Select Data sources in current files
+4. Select Cosmos DB
+5. Edit Permissions > Edit Credentials
+6. Introduce Cosmos DB Account key and save
+7. Save report to current file
 
-    a. Home > Transform Data > Data Source Settings
- 
-  i. Data sources in current files
-  
-  ii. Select Cosmos DB
-  
-  iii. Edit Permissions > Edit Credentials
-  
-  iv. Introduce Cosmos DB Account key and save
-   
- b. Save report to current file
-      
-2. Navigate to https://app.powerbi.com/
-  
- a. Menu > Create
-    
-  i. New workspace
-  
-  ii. Provide workspace name, for example: Claim App Workspace
-  
-  iii. Save
-    
- b. Menu > Claim App Workspace
-    
-  i. New > Upload a file
-  
-  ii. Import powerBI_claimApp.pbix to workspace
+8. Navigate to https://app.powerbi.com/
+9. Menu > Create
+10. New workspace
+11. Provide workspace name, for example: Claim App Workspace
+12. Save
+13. Menu > Claim App Workspace
+14. New > Upload a file
+15. Import powerBI_claimApp.pbix to workspace
 
 
 ### Task 3: Configure canvas app
 
-1. Navigate to https://make.powerapps.com/
+Navigate to https://make.powerapps.com/
   
- a. Menu > FLows 
-    
-  i. Edit Claim_App_GETALLCLAIMS
+1. Menu > FLows 
+2. Edit Claim_App_GETALLCLAIMS
+3. Open the HTTP connector step in the flow
+4. Modify the connector Uri to your AKS public endpoint
+5. Save flow and exit
+6. Repeat for Claim_App_POSTCLAIM
   
-  ii. Open the HTTP connector step in the flow
-  
-  iii. Modify the connector Uri to your AKS public endpoint
-  
-  iv. Save flow and exit
-  
-  v. Repeat for Claim_App_POSTCLAIM
-  
- b. Menu > Apps > Claim_App > Edit
-    
-  i. Screens > Claim Dashboard
-  
-  ii. Select the Power BI object and open the connection pane
-  
-  iii. Select your newly created workspace and connect to the Claim Dashboard report and tile
-       
- c. File > Save and Publish
+7. Menu > Apps > Claim_App > Edit
+8. Screens > Claim Dashboard
+9. Select the Power BI object and open the connection pane
+10. Select your newly created workspace and connect to the Claim Dashboard report and tile
+11. File > Save and Publish
 
