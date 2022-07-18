@@ -81,6 +81,14 @@ Also, there will be two microservices present in the architecture that will offe
     - Trial subscriptions will not work. You will run into issues with Azure resource quota limits.
     - Subscriptions with access limited to a single resource group will not work. You will need the ability to deploy multiple resource groups.
 
+2. You will need a Microsoft 365 with the folling licensing and permissions. You can contact your tenant administrators if any of the following are missing, or as an alternative, provision a 30-day demo tenant [here.](https://signup.microsoft.com/get-started/signup?products=101bde18-5ffb-4d79-a47b-f5b2c62525b3&culture=en-US&country=US&ali=1&bac=1&signedinuser=jocaffar%40microsoft.com)
+
+    - Enterprise licensing (E3/E5) or Business Premium
+    - Power Automate/Power App per user plan (premium HTTP connector required)
+    - Power App publishing permissions
+
+3. Power BI Desktop.
+
 ## Exercise 1: Create and deploy a Summarization Service
 
 Duration: 60 minutes
@@ -441,3 +449,77 @@ Feel free to perform a simple test by querying all the existing 'claims' using t
 ```
 <youruser>@Azure:~/sources/Hands-on lab/microservices$ curl -v  claims-reader.${AKS_DOMAIN}/claims
 ```
+
+## Exercise Y: Deploying your Power App
+
+Duration: 40 minutes
+
+In this exercise, you wll import the Claim_App.zip canvas app into your environment. We will navigate through the Power Apps [site](https://make.powerapps.com/), Power Apps studio and PowerBI [site](https://app.powerbi.com/) to complete this section. 
+
+### Task 1: Import canvas app
+
+
+	1. Navigate to https://make.powerapps.com/
+  
+		a. Menu > Apps > Import Canvas App
+    
+			i. Upload zip package: Claim_App
+			ii. Import Setup: Create as new for the PowerApp and proposed flows
+      iii. Select Import
+  
+  	b. Menu > Flows
+    
+			i. Claim_App_GETALLCLAIMS (open options) and Turn ON
+      ii. Claim_App_POSTCLAIM (open options) and Turn ON
+      
+ ### Task 2: Prepare and import Power BI Dashboard
+      
+      
+  1. Download the powerBI_claimApp.pbix from the git content folder and open in Power BI Desktop
+
+    a. Home > Transform Data > Data Source Settings
+    
+      i. Data sources in current files
+      ii. Select Cosmos DB
+      iii. Edit Permissions > Edit Credentials
+      iv. Introduce Cosmos DB Account key and save
+      
+    b. Save report to current file
+      
+  2. Navigate to https://app.powerbi.com/
+  
+		a. Menu > Create
+    
+      i. New workspace
+      ii. Provide workspace name, for example: Claim App Workspace
+      iii. Save
+    
+    b. Menu > Claim App Workspace
+    
+      i. New > Upload a file
+      ii. Import powerBI_claimApp.pbix to workspace
+
+
+ ### Task 3: Configure canvas app
+
+	1. Navigate to https://make.powerapps.com/
+  
+  
+    a. Menu > FLows 
+    
+      i. Edit Claim_App_GETALLCLAIMS
+      ii. Open the HTTP connector step in the flow
+      iii. Modify the connector Uri to your AKS public endpoint
+      iv. Save flow and exit
+      v. Repeat for Claim_App_POSTCLAIM
+  
+    b. Menu > Apps > Claim_App > Edit
+    
+      i. Screens > Claim Dashboard
+      ii. Select the Power BI object and open the connection pane
+      iii. Select your newly created workspace and connect to the Claim Dashboard report and tile
+       
+    b. File > Save and Publish
+
+  
+  
