@@ -482,7 +482,7 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
       	i. Data sources in current files
       	ii. Select Cosmos DB
       	iii. Edit Permissions > Edit Credentials
-     	 iv. Introduce Cosmos DB Account key and save
+     	iv. Introduce Cosmos DB Account key and save
       
     	b. Save report to current file
       
@@ -519,7 +519,7 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
       	ii. Select the Power BI object and open the connection pane
       	iii. Select your newly created workspace and connect to the Claim Dashboard report and tile
        
-    	b. File > Save and Publish
+    	c. File > Save and Publish
 
   
   
