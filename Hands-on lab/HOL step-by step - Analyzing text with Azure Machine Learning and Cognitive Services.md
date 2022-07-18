@@ -458,7 +458,6 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
 
 ### Task 1: Import canvas app
 
-
 1. Navigate to https://make.powerapps.com/
   
 	a. Menu > Apps > Import Canvas App
@@ -473,7 +472,6 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
       	ii. Claim_App_POSTCLAIM (open options) and Turn ON
       
 ### Task 2: Prepare and import Power BI Dashboard
-      
       
 1. Download the powerBI_claimApp.pbix from the git content folder and open in Power BI Desktop
 
@@ -503,7 +501,6 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
 ### Task 3: Configure canvas app
 
 1. Navigate to https://make.powerapps.com/
-  
   
     	a. Menu > FLows 
     
