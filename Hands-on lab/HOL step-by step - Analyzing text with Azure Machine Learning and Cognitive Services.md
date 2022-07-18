@@ -489,7 +489,9 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
  a. Menu > Create
     
   i. New workspace
+  
   ii. Provide workspace name, for example: Claim App Workspace
+  
   iii. Save
     
  b. Menu > Claim App Workspace
