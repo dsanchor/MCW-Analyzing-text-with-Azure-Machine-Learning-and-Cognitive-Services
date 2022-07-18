@@ -460,22 +460,25 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
 
 1. Navigate to https://make.powerapps.com/
   
- a. Menu > Apps > Import Canvas App
+    a. Menu > Apps > Import Canvas App
     
   i. Upload zip package: Claim_App
+  
   ii. Import Setup: Create as new for the PowerApp and proposed flows
+  
   iii. Select Import
 
- b. Menu > Flows
+    b. Menu > Flows
     
   i. Claim_App_GETALLCLAIMS (open options) and Turn ON
+  
   ii. Claim_App_POSTCLAIM (open options) and Turn ON
       
 ### Task 2: Prepare and import Power BI Dashboard
       
 1. Download the powerBI_claimApp.pbix from the git content folder and open in Power BI Desktop
 
- a. Home > Transform Data > Data Source Settings
+    a. Home > Transform Data > Data Source Settings
  
   i. Data sources in current files
   
