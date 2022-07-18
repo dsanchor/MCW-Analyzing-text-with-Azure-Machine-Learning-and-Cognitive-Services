@@ -460,13 +460,13 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
 
 1. Navigate to https://make.powerapps.com/
   
-	a. Menu > Apps > Import Canvas App
+ a. Menu > Apps > Import Canvas App
     
 	i. Upload zip package: Claim_App
 	ii. Import Setup: Create as new for the PowerApp and proposed flows
       	iii. Select Import
-  
-  	b. Menu > Flows
+
+ b. Menu > Flows
     
 	i. Claim_App_GETALLCLAIMS (open options) and Turn ON
       	ii. Claim_App_POSTCLAIM (open options) and Turn ON
@@ -475,24 +475,24 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
       
 1. Download the powerBI_claimApp.pbix from the git content folder and open in Power BI Desktop
 
-    	a. Home > Transform Data > Data Source Settings
+ a. Home > Transform Data > Data Source Settings
     
       	i. Data sources in current files
       	ii. Select Cosmos DB
       	iii. Edit Permissions > Edit Credentials
      	iv. Introduce Cosmos DB Account key and save
-      
-    	b. Save report to current file
+   
+ b. Save report to current file
       
 2. Navigate to https://app.powerbi.com/
   
-	a. Menu > Create
+ a. Menu > Create
     
      	i. New workspace
       	ii. Provide workspace name, for example: Claim App Workspace
       	iii. Save
     
-    	b. Menu > Claim App Workspace
+ b. Menu > Claim App Workspace
     
       	i. New > Upload a file
       	ii. Import powerBI_claimApp.pbix to workspace
@@ -502,7 +502,7 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
 
 1. Navigate to https://make.powerapps.com/
   
-    	a. Menu > FLows 
+ a. Menu > FLows 
     
       	i. Edit Claim_App_GETALLCLAIMS
       	ii. Open the HTTP connector step in the flow
@@ -510,13 +510,11 @@ In this exercise, you wll import the Claim_App.zip canvas app into your environm
       	iv. Save flow and exit
       	v. Repeat for Claim_App_POSTCLAIM
   
-    	b. Menu > Apps > Claim_App > Edit
+ b. Menu > Apps > Claim_App > Edit
     
       	i. Screens > Claim Dashboard
       	ii. Select the Power BI object and open the connection pane
       	iii. Select your newly created workspace and connect to the Claim Dashboard report and tile
        
-    	c. File > Save and Publish
+ c. File > Save and Publish
 
-  
-  
