@@ -433,59 +433,77 @@ Duration: 40 minutes
 In this exercise, you wll import the Claim_App.zip canvas app into your environment. We will navigate through the Power Apps [site](https://make.powerapps.com/), Power Apps studio and PowerBI [site](https://app.powerbi.com/) to complete this section. 
 
 
-### Task 1: Import canvas app
+### Task 1: Import the canvas app to your tenant environment
+
+
+> **Important**: You must upload all resources to a unique dataverse environment where you have at least contributor permissions.
+
 
 Navigate to https://make.powerapps.com/
 
-1. Check you are in the desired Environment
-2. Menu > Apps > Import Canvas App
+1. Check you are in the desired **Environment**
+2. Navigate to Menu > Apps > Import Canvas App
 3. Upload zip package: Claim_App
-4. Import Setup: Create as new for the PowerApp and proposed flows
-5. Select Import
+4. **Import Setup**. Once loaded, select `Create as new` for the PowerApp and proposed flow connections.
 
-Now, we must acrivate the imported flows from our canvas app.
+![Import Setup](media/powerapp_import.png "Power App Import")
 
-6. Menu > Flows
-7. Claim_App_GETALLCLAIMS (open options) and Turn ON
-8. Claim_App_POSTCLAIM (open options) and Turn ON
+6. Select **Import**
+
+Now we must activate the imported flows for our canvas app.
+
+6. Navigate to Menu > Flows
+7. Select Claim_App_GETALLCLAIMS (open options) and **Turn ON**
+8. Select Claim_App_POSTCLAIM (open options) and **Turn ON**
       
+![Turn on flows](media/activate_flows.png "Turn on Flows")
       
-### Task 2: Prepare and import Power BI Dashboard
-      
-1. Download the powerBI_claimApp.pbix from the git content folder and open in Power BI Desktop
-2. Home > Transform Data > Open the Data Source Settings
-3. Select Data sources in current files
-4. Select Cosmos DB
+### Task 2: Prepare and import the Power BI Dashboard to your tenant environment
+   
+ 
+1. Download the **powerBI_claimApp.pbix** file from the git content folder and open in Power BI Desktop
+2. In the Power BI Desktop app, navigate to Home > Transform Data > Open the `Data Source Settings`
+3. Select `Data sources` in current files
+4. Select `Cosmos DB`
 5. Edit Permissions > Edit Credentials
-6. Introduce Cosmos DB Account key and save
-7. Save report to current file
+6. Introduce Cosmos DB **Account key** and **save**
+7. **Save** report to current file
 
 8. Navigate to https://app.powerbi.com/
-9. Menu > Create
-10. New workspace
-11. Provide workspace name, for example: Claim App Workspace
-12. Save
-13. Menu > Claim App Workspace
-14. New > Upload a file
-15. Import powerBI_claimApp.pbix to workspace
+9. Navigate to Menu > Create > New Workspace
+10. Provide the workspace name, for example: Claim App Workspace
+11. Click **Save**
+12. Navigate to you new workspace in Menu > Claim App Workspace
+14. Select New > Upload a file
+15. **Import** powerBI_claimApp.pbix to workspace
 
 
 ### Task 3: Configure canvas app
 
 Navigate to https://make.powerapps.com/
   
-1. Menu > FLows 
-2. Edit Claim_App_GETALLCLAIMS
+1. Navigate to Menu > FLows 
+2. Select and edit Claim_App_GETALLCLAIMS
 3. Open the HTTP connector step in the flow
-4. Modify the connector Uri to your AKS public endpoint
-5. Save flow and exit
-6. Repeat for Claim_App_POSTCLAIM
-  
-7. Menu > Apps > Claim_App > Edit
-8. Screens > Claim Dashboard
+4. Modify the HTTP connector Uri to your **AKS REST endpoint**
+
+![Modify Flows](media/modify_flow_http.png "Modify Flows")
+
+
+6. **Save** flow and exit
+7. Repeat for Claim_App_POSTCLAIM
+
+Return to https://make.powerapps.com/
+
+7. Navigate to Menu > Apps > Claim_App > Edit in power app studio
+8. Open the screens pane > `Claim Dashboard`
 9. Select the Power BI object and open the connection pane
 10. Select your newly created workspace and connect to the Claim Dashboard report and tile
-11. File > Save and Publish
+
+![Add dashboard](media/powerapp_dashboard.png "Add dashboard")
+
+
+12. File > **Save and Publish your app**
 
 ## After the implementation
 
