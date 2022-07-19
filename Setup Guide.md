@@ -1,5 +1,5 @@
 
-# Cloud Native text analytics platform 
+# Cloud Native Text Analytics Platform 
 
 ## Setup guide
 
@@ -19,7 +19,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 <!-- TOC -->
 
-- [Cloud Native text analytics platform](#cloud-native-text-analytics-platform)
+- [Cloud Native Text Analytics Platform](#cloud-native-text-analytics-platform)
   - [Setup guide](#setup-guide)
   - [Requirements](#requirements)
   - [Setup guide](#setup-guide-1)

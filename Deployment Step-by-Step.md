@@ -1,15 +1,9 @@
+# Cloud Native Text Analytics Platform
 
-<div class="MCWHeader1">
-Cloud Native Text Analytics Platform
-</div>
+## Deployment Step-by-Step
 
-<div class="MCWHeader2">
-Deployment Step-by-Step
-</div>
-
-<div class="MCWHeader3">
 July 2022
-</div>
+
 
 Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
 
@@ -23,7 +17,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 **Contents**
 
-- [Building a Cloud Native Text Analytics Platform Step-by-Step](#analyzing-text-with-azure-machine-learning-and-cognitive-services-step-by-step)
+- [Cloud Native Text Analytics Platform](#cloud-native-text-analytics-platform)
+  - [Deployment Step-by-Step](#deployment-step-by-step)
   - [Abstract and learning objectives](#abstract-and-learning-objectives)
   - [Overview](#overview)
   - [Solution architecture](#solution-architecture)
@@ -35,27 +30,22 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
   - [Exercise 2: Create and deploy a custom Deep Learning Model using Keras](#exercise-2-create-and-deploy-a-custom-deep-learning-model-using-keras)
     - [Task 1: Run notebook - 03 Claim Classification](#task-1-run-notebook---03-claim-classification)
     - [Task 2: Run notebook - 04 Deploy Classifier Web Service](#task-2-run-notebook---04-deploy-classifier-web-service)
-  - [Exercise 3: Text classification with Azure Automated Machine Learning](#exercise-3-text-classification-with-azure-automated-machine-learning)
+  - [(Optional) Exercise 3: Text classification with Azure Automated Machine Learning](#optional-exercise-3-text-classification-with-azure-automated-machine-learning)
     - [Task 1: Create new automated ML experiment](#task-1-create-new-automated-ml-experiment)
     - [Task 2: Create a new automated ML run](#task-2-create-a-new-automated-ml-run)
     - [Task 3: Monitor automated ML run](#task-3-monitor-automated-ml-run)
     - [Task 4: Review best model performance](#task-4-review-best-model-performance)
-  - [Exercise 4: Completing the solution](#exercise-4-completing-the-solution)
-    - [Task 1: Retrieve the Text Analytics API endpoint and key](#task-1-retrieve-the-text-analytics-api-endpoint-and-key)
-    - [Task 2: Run notebook - 05 Cognitive Services](#task-2-run-notebook---05-cognitive-services)
-  - [Exercise 5: Deploy microservices in AKS](#exercise-x-deploy-microservices-in-aks)
+  - [Exercise 4: Deploy microservices in AKS](#exercise-4-deploy-microservices-in-aks)
     - [Task 0: Pre-requirements](#task-0-pre-requirements)
     - [Task 1: Init configuration file](#task-1-init-configuration-file)
-    - [Task 2: Deploy microservices to AKS](#task-2-deploy-microservices-to-aks)
-  - [Exercise 6: Deploying your Power App](#exercise-y-deploying-your-power-app)
-    - [Task 1: Import Canvas App](#task-1-import-canvas-app)
-    - [Task 2: Prepare and import Power BI Dashboard](#task-2-prepare-and-import-power-bi-dashboard)
+  - [Exercise 5: Deploying your Power App](#exercise-5-deploying-your-power-app)
+    - [Task 1: Import the canvas app to your tenant environment](#task-1-import-the-canvas-app-to-your-tenant-environment)
+    - [Task 2: Prepare and import the Power BI Dashboard to your tenant environment](#task-2-prepare-and-import-the-power-bi-dashboard-to-your-tenant-environment)
     - [Task 3: Configure canvas app](#task-3-configure-canvas-app)
-  - [After completion](#after-completion)
-    - [Task 1: Clean up resources](#task-1-clean-up-resources)
+  - [After the implementation](#after-the-implementation)
+    - [Task 1: Clean up lab resources](#task-1-clean-up-lab-resources)
   
 
-# Analyzing text with Azure Machine Learning and Cognitive Services step-by-step
 
 ## Abstract and learning objectives
 
@@ -82,16 +72,20 @@ Also, there will be two microservices present in the architecture that will offe
 
 ## Requirements
 
-1. You will need an Azure subscription with permissions to deploy resource groups and resources into them.
+1. You will need an Azure subscription with permissions to deploy resource groups and resources into them. FIXME: COMO EL SETUP
 
     - Trial subscriptions will not work. You will run into issues with Azure resource quota limits.
     - Subscriptions with access limited to a single resource group will not work. You will need the ability to deploy multiple resource groups.
 
 2. You will need a Microsoft 365 with the folling licensing and permissions. You can contact your tenant administrators if any of the following are missing, or as an alternative, provision a 30-day demo tenant [here.](https://signup.microsoft.com/get-started/signup?products=101bde18-5ffb-4d79-a47b-f5b2c62525b3&culture=en-US&country=US&ali=1&bac=1&signedinuser=jocaffar%40microsoft.com)
 
+
+
     - Enterprise licensing (E3/E5) or Business Premium
     - Power Automate/Power App per user plan (premium HTTP connector required)
     - Power App publishing permissions
+
+FIXME: LO NECESITAMOS EN EL ANTERIOR?
 
 3. Power BI Desktop.
 
@@ -105,7 +99,7 @@ In this exercise, you create and deploy a web service that uses a pre-trained mo
 
 In this task, you will navigate to the folder where all the notebooks for this lab are available. Then you will open the `Summarization` notebook and confirm that the compute instance is attached to the notebook.
 
-1. From within Azure Machine Learning studio, navigate to the `Notebooks` section by selecting it from the left-hand navigation menu. Then select the notebook: **cloud-native-text-analytics-platform/notebooks/01 Summarize.ipynb**. From the toolbar select **Compute** and confirm that the compute instance created in `Setup Guide` is selected and is in running state.
+1. From within Azure Machine Learning studio, navigate to the `Notebooks` section by selecting it from the left-hand navigation menu. Select **ta-repo** and open the notebook: **cloud-native-text-analytics-platform/notebooks/01 Summarize.ipynb**. In the toolbar confirm that the compute instance created in `Setup Guide` is selected and is in running state.
 
     ![The 01 Summarize.ipynb notebook is opened from within the notebooks section of the Azure Machine Learning Studio.](media/notebook-01.png "01 Summarize.ipynb")
 
@@ -118,10 +112,11 @@ In this task, you will navigate to the folder where all the notebooks for this l
 ### Task 3: Run notebook - 02 Deploy Summarizer Web Service
 
 1. Within the `notebooks` folder, select the notebook called **02 Deploy Summarizer Web Service.ipynb**. This opens the notebook so you can read and execute the code it contains.
+2. Under `Variables initialization` cell, modify the variable `akscomputename` to the one created in the **Setup Guide** in the form of aksSUFFIX
 
-2. Read the instructions at the top of the notebook, and execute the cells as instructed.
+3. Read the instructions at the top of the notebook, and execute the cells as instructed.
 
-3. Make sure you copy the scoring URI from the output of the last cell of this notebook. The scoring URI value is needed in the final notebook of this hands-on lab.
+4. Make sure you copy the scoring URI from the output of the last cell of this notebook. The scoring URI value is needed in the final notebook of this hands-on lab.
 
 ## Exercise 2: Create and deploy a custom Deep Learning Model using Keras
 
@@ -223,40 +218,8 @@ In this exercise, you learn how to create, run, and explore automated machine le
 
   > **Note**: You have the option to deploy the trained model pipeline to either Azure Container Instance or Azure Kubernetes Service directly from the Azure ML Studio.
 
-## Exercise 4: Completing the solution
 
-Duration: 45 minutes
-
-In this exercise, you perform the integration with the Text Analytics APIs and the Azure Machine Learning service you previously deployed to deliver the proof of concept solution.
-
-### Task 1: Retrieve the Text Analytics API endpoint and key
-
-In this task, you will retrieve the API key and endpoint URI associated with your Text Analytics API.
-
-1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
-
-   ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
-
-2. Select the `hands-on-lab-SUFFIX` resource group you created for this hands-on lab from the list of resource groups.
-
-    ![The hands-on-lab-SUFFIX resource group is highlighted in the list of resource groups.](media/resource-groups.png "Resource groups")
-
-3. Select your Text Analytics Cognitive Services resource from the list.
-
-    ![The computer vision resource is highlighted in the list of resources in the hands-on-lab-SUFFIX resource group.](media/resources-text-analytics.png "Text Analytics resource")
-
-4. Select **Keys and Endpoint** from the left-hand navigation menu and then copy the **Key 1** and **Endpoint** values into a text editor, such as Notepad.exe, or something similar as you will need this value later in this exercise.
-
-    ![Keys and Endpoint in highlighted and selected in the left-hand navigation menu. The copy buttons for Key 1 and Endpoint are highlighted.](media/text-analytics-keys-and-endpoint.png "Text Analytics Keys and Endpoint")
-
-### Task 2: Run notebook - 05 Cognitive Services 
-
-1. From within Azure Machine Learning Studio, navigate to the `Notebooks` section by selecting it from the left-hand navigation menu. Then select the notebook: **cloud-native-text-analytics-platform/notebooks/05 Cognitive Services.ipynb**. This opens the notebook so you can read and execute the code it contains.
-
-2. Follow the steps within the notebook to complete the lab and view the result of combining Cognitive Services with your Azure Machine Learning Services.
-
-
-## Exercise 5: Deploy microservices in AKS
+## Exercise 4: Deploy microservices in AKS
 
 Duration: 30 minutes
 
@@ -426,7 +389,7 @@ Feel free to perform a simple test by querying all the existing 'claims' using t
 <youruser>@Azure:~/sources/Hands-on lab/microservices$ curl -v  claims-reader.${AKS_DOMAIN}/claims
 ```
 
-## Exercise 6: Deploying your Power App
+## Exercise 5: Deploying your Power App
 
 Duration: 40 minutes
 
