@@ -1,3 +1,4 @@
+<!-- se puede cambiar el fromato? -->
 <div class="MCWHeader1">
 Analyzing text with Azure Machine Learning and Cognitive Services
 </div>
@@ -22,39 +23,39 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 **Contents**
 
-<!-- TOC -->
 
-- [Analyzing text with Azure Machine Learning and Cognitive Services setup guide](#analyzing-text-with-azure-machine-learning-and-cognitive-services-setup-guide)
+
+- [Cloud Native text analytics platform setup guide](#cloud-native-text-analytics-platform-setup-guide)
   - [Requirements](#requirements)
-  - [Setup Guide](#Setup-guide)
+  - [Setup guide](#setup-guide)
     - [Task 1: Create a resource group](#task-1-create-a-resource-group)
     - [Task 2: Provision a Text Analytics API](#task-2-provision-a-text-analytics-api)
-    - [Task 3: Provision an Azure Container Registry](#task-3-provision-an-azure-container-registry) 
+    - [Task 3: Provision an Azure Container Registry](#task-3-provision-an-azure-container-registry)
     - [Task 4: Create an Azure Machine Learning workspace](#task-4-create-an-azure-machine-learning-workspace)
     - [Task 5: Create an Azure Kubernetes Service](#task-5-create-an-azure-kubernetes-service)
-    - [Task 6: Configure AKS compute in Azure Machine Learning Studio](#task-6-configure-aks-compute-in-azure-machine-learning-studio)
+    - [Task 6: Create compute instance and configure AKS compute in Azure Machine Learning Studio](#task-6-create-compute-instance-and-configure-aks-compute-in-azure-machine-learning-studio)
     - [Task 7: Deploy a CosmosDB instance](#task-7-deploy-a-cosmosdb-instance)
     - [Task 8: Import the lab notebooks](#task-8-import-the-lab-notebooks)
     - [Task 9: Setup lab environment](#task-9-setup-lab-environment)
 
-<!-- /TOC -->
 
-# Analyzing text with Azure Machine Learning and Cognitive Services setup guide
+
+# Cloud Native text analytics platform setup guide
 
 ## Requirements
 
 1. You will need an Azure subscription with permissions to deploy resource groups and resources into them.
 
-   - Trial subscriptions will not work. You will run into issues with Azure resource quota limits.
+   - Trial subscriptions will not work. You will run into issues with Azure resource quota limits. FIXME: estamos seguros de esto?
    - Subscriptions with access limited to a single resource group will not work. You need the ability to deploy multiple resource groups.
 
 ## Setup guide
 
-Duration: 45 minutes
+Duration: 45 minutes FIXME:revisar
 
 In this exercise, you set up your environment for use in the rest of the deployment. You should follow all steps provided in the setup guide.
 
-> **Important**: Many Azure resources require globally unique names. Throughout these steps, the word "SUFFIX" appears as part of resource names. You should replace this with your Microsoft alias, initials, or other value to ensure uniquely named resources.
+> **Important**: Many Azure resources require globally unique names. Throughout these steps, the word "SUFFIX" appears as part of resource names. You should replace this with your Microsoft alias, initials, or other value to ensure uniquely named resources. FIXME:revisar
 
 ### Task 1: Create a resource group
 
@@ -69,7 +70,7 @@ In this exercise, you set up your environment for use in the rest of the deploym
 3. On the Create a resource group **Basics** tab, enter the following:
 
    - **Subscription**: Select the subscription you are using.
-   - **Resource group**: Enter `rg-text-analytics-SUFFIX` as the name of the new resource group, where SUFFIX is your Microsoft alias, initials, or other value to ensure uniquely named resources.
+   - **Resource group**: Enter `hands-on-lab` as the name of the new resource group.
    - **Region**: Select the region where you want to deploy your resources.
 
    ![The values specified above are entered into the Create a resource group Basics tab.](media/create-resource-group.png "Create resource group")
@@ -97,7 +98,7 @@ In this task, you create a Text Analytics API, which will be integrated into you
     Project details:
 
     - **Subscription**: Select the subscription you are using.
-    - **Resource group**: Select the rg-text-analytics-SUFFIX resource group from the dropdown list.
+    - **Resource group**: Select the hands-on-lab resource group from the dropdown list.
 
     Instance Details:
 
