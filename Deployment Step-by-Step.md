@@ -1,6 +1,6 @@
 
 <div class="MCWHeader1">
-Analyzing text with Azure Machine Learning and Cognitive Services
+Cloud Native Text Analytics Platform
 </div>
 
 <div class="MCWHeader2">
@@ -8,7 +8,7 @@ Deployment Step-by-Step
 </div>
 
 <div class="MCWHeader3">
-March 2022
+July 2022
 </div>
 
 Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
@@ -23,7 +23,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 **Contents**
 
-- [Analyzing text with Azure Machine Learning and Cognitive Services step-by-step](#analyzing-text-with-azure-machine-learning-and-cognitive-services-step-by-step)
+- [Building a Cloud Native Text Analytics Platform Step-by-Step](#analyzing-text-with-azure-machine-learning-and-cognitive-services-step-by-step)
   - [Abstract and learning objectives](#abstract-and-learning-objectives)
   - [Overview](#overview)
   - [Solution architecture](#solution-architecture)
@@ -43,8 +43,6 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
   - [Exercise 4: Completing the solution](#exercise-4-completing-the-solution)
     - [Task 1: Retrieve the Text Analytics API endpoint and key](#task-1-retrieve-the-text-analytics-api-endpoint-and-key)
     - [Task 2: Run notebook - 05 Cognitive Services](#task-2-run-notebook---05-cognitive-services)
-  - [After completion](#after-completion)
-    - [Task 1: Clean up resources](#task-1-clean-up-resources)
   - [Exercise 5: Deploy microservices in AKS](#exercise-x-deploy-microservices-in-aks)
     - [Task 0: Pre-requirements](#task-0-pre-requirements)
     - [Task 1: Init configuration file](#task-1-init-configuration-file)
@@ -53,6 +51,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Import Canvas App](#task-1-import-canvas-app)
     - [Task 2: Prepare and import Power BI Dashboard](#task-2-prepare-and-import-power-bi-dashboard)
     - [Task 3: Configure canvas app](#task-3-configure-canvas-app)
+  - [After completion](#after-completion)
+    - [Task 1: Clean up resources](#task-1-clean-up-resources)
   
 
 # Analyzing text with Azure Machine Learning and Cognitive Services step-by-step
@@ -63,19 +63,20 @@ In this step-by-step, you will implement a solution that combines both pre-built
 
 At the end of this implementation, you will be better able to present solutions leveraging Azure Machine Learning services and Cognitive Services.
 
-On the other hand, you will have the chance to deploy a set of microservices to a k8s cluster. These microservices will interact with a CosmosDB instance, where data will be stored and also to above mentioned services, such as Text Analytics APIs and trained models.
+Additionally, you will have the chance to deploy a set of microservices to a k8s cluster. These microservices will interact with a CosmosDB instance, where data will be stored and also to above mentioned services, such as Text Analytics APIs and trained models.
 
-Finally, you will deploy a PowerApp that will consume these microservices APIs to create a full E2E scenario.
+Finally, you will deploy a PowerApp that will consume these microservices APIs to create a full end-to-end scenario.
 
 ## Overview
 
-In this workshop, you will help Contoso Ltd. build a proof of concept that shows how they can develop a solution that amplifies their agents' claims processing capabilities.
+In this deployment, you will help Contoso Ltd. build a proof of concept that shows how they can develop a solution that amplifies their agents' claims processing capabilities.
 
 ## Solution architecture
 
 The high-level architecture of the solution is illustrated in the diagram. The case is performed within the context of a notebook running within Azure Machine Learning compute instance. Various notebooks are built to test the integration with the Cognitive Services listed, train custom ML services, and integrate the results in a simple user interface that shows the effect of processing the claim with all the AI services involved.
 
-Also, there will be two microservices present in the architecture that will offer a set of APIs to possible consumers. One consumer in this architecture is the Power App, that will provide the user with a simple but complete UI to get a great user experience during the demonstration of every capability of the whole architecture.
+Also, there will be two microservices present in the architecture that will offer a set of APIs to possible consumers. One consumer of these microservices in this architecture is the Power App, that will provide the user with a simple but complete UI to get a great user experience during the demonstration of every capability of the whole architecture.
+
 
 ![The High-level architectural solution begins with a Claim, which points to Claims submission WebApp. The WebApp then points to Text Analytics, and Containerized Services, which includes a Classification Service and a Summary Service that both processes claim text.](media/new_arch_extended.png "High-level architectural solution")
 
@@ -104,7 +105,7 @@ In this exercise, you create and deploy a web service that uses a pre-trained mo
 
 In this task, you will navigate to the folder where all the notebooks for this lab are available. Then you will open the `Summarization` notebook and confirm that the compute instance is attached to the notebook.
 
-1. From within Azure Machine Learning studio, navigate to the `Notebooks` section by selecting it from the left-hand navigation menu. Then select the notebook: **mcw-csdl/MCW-Analyzing-text-with-azure-machine-learning-and-cognitive-services/Hands-on lab/notebooks/01 Summarize.ipynb**. From the toolbar select **Compute** and confirm that the compute instance created in `Before the HOL - Analyzing text with Azure Machine Learning and Cognitive Services` is selected and is in running state.
+1. From within Azure Machine Learning studio, navigate to the `Notebooks` section by selecting it from the left-hand navigation menu. Then select the notebook: **cloud-native-text-analytics-platform/notebooks/01 Summarize.ipynb**. From the toolbar select **Compute** and confirm that the compute instance created in `Setup Guide` is selected and is in running state.
 
     ![The 01 Summarize.ipynb notebook is opened from within the notebooks section of the Azure Machine Learning Studio.](media/notebook-01.png "01 Summarize.ipynb")
 
@@ -226,7 +227,7 @@ In this exercise, you learn how to create, run, and explore automated machine le
 
 Duration: 45 minutes
 
-In this exercise, you perform the final integration with the Text Analytics APIs and the Azure Machine Learning service you previously deployed to deliver the completed proof of concept solution.
+In this exercise, you perform the integration with the Text Analytics APIs and the Azure Machine Learning service you previously deployed to deliver the proof of concept solution.
 
 ### Task 1: Retrieve the Text Analytics API endpoint and key
 
@@ -248,42 +249,12 @@ In this task, you will retrieve the API key and endpoint URI associated with you
 
     ![Keys and Endpoint in highlighted and selected in the left-hand navigation menu. The copy buttons for Key 1 and Endpoint are highlighted.](media/text-analytics-keys-and-endpoint.png "Text Analytics Keys and Endpoint")
 
-### Task 2: Run notebook - 05 Cognitive Services
-REVISAR 
+### Task 2: Run notebook - 05 Cognitive Services 
 
-1. From within Azure Machine Learning Studio, navigate to the `Notebooks` section by selecting it from the left-hand navigation menu. Then select the notebook: **mcw-csdl/MCW-Analyzing-text-with-azure-machine-learning-and-cognitive-services/Hands-on lab/notebooks/05 Cognitive Services.ipynb**. This opens the notebook so you can read and execute the code it contains.
+1. From within Azure Machine Learning Studio, navigate to the `Notebooks` section by selecting it from the left-hand navigation menu. Then select the notebook: **cloud-native-text-analytics-platform/notebooks/05 Cognitive Services.ipynb**. This opens the notebook so you can read and execute the code it contains.
 
 2. Follow the steps within the notebook to complete the lab and view the result of combining Cognitive Services with your Azure Machine Learning Services.
 
-## After the implementation
-
-Duration: 5 minutes
-
-To avoid unexpected charges, it is recommended that you clean up all your lab resources when you complete the lab.
-
-### Task 1: Clean up lab resources
-
-1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
-
-   ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
-
-2. Select the `rg-text-analytics-SUFFIX` resource group you created for this hands-on lab from the list of resource groups.
-
-    ![The rg-text-analytics-SUFFIX resource group is highlighted in the list of resource groups.](media/resource-groups.png "Resource groups")
-
-3. Select **Delete resource group** from the command bar.
-
-    ![Delete resource group is highlighted on the toolbar of the rg-text-analytics-SUFFIX resource group.](media/delete-resource-group.png "Delete resource group")
-
-4. In the confirmation dialog that appears, enter the name of the resource group, and select **Delete**.
-
-5. Wait for confirmation the Resource Group has been successfully deleted. If you don't wait, and the delete fails for some reason, you may be left with resources running that were not expected. You can monitor using the Notifications dialog, which is accessible from the Alarm icon.
-
-    ![The Notifications dialog box has a message stating that the resource group is being deleted.](media/notifications-deleting-resource-group.png 'Notifications dialog box')
-
-6. When the Notification indicates success, the cleanup is complete.
-
-TODO put it in the right place and review TBD tags
 
 ## Exercise 5: Deploy microservices in AKS
 
@@ -516,3 +487,32 @@ Navigate to https://make.powerapps.com/
 10. Select your newly created workspace and connect to the Claim Dashboard report and tile
 11. File > Save and Publish
 
+## After the implementation
+
+Duration: 5 minutes
+
+To avoid unexpected charges, it is recommended that you clean up all your lab resources when you complete the lab.
+
+### Task 1: Clean up lab resources
+
+1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
+
+   ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
+
+2. Select the `rg-text-analytics-SUFFIX` resource group you created for this hands-on lab from the list of resource groups.
+
+    ![The rg-text-analytics-SUFFIX resource group is highlighted in the list of resource groups.](media/resource-groups.png "Resource groups")
+
+3. Select **Delete resource group** from the command bar.
+
+    ![Delete resource group is highlighted on the toolbar of the rg-text-analytics-SUFFIX resource group.](media/delete-resource-group.png "Delete resource group")
+
+4. In the confirmation dialog that appears, enter the name of the resource group, and select **Delete**.
+
+5. Wait for confirmation the Resource Group has been successfully deleted. If you don't wait, and the delete fails for some reason, you may be left with resources running that were not expected. You can monitor using the Notifications dialog, which is accessible from the Alarm icon.
+
+    ![The Notifications dialog box has a message stating that the resource group is being deleted.](media/notifications-deleting-resource-group.png 'Notifications dialog box')
+
+6. When the Notification indicates success, the cleanup is complete.
+
+TODO put it in the right place and review TBD tags
