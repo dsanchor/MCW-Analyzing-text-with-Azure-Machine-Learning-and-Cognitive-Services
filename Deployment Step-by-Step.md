@@ -38,6 +38,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
   - [Exercise 4: Deploy microservices in AKS](#exercise-4-deploy-microservices-in-aks)
     - [Task 0: Pre-requirements](#task-0-pre-requirements)
     - [Task 1: Init configuration file](#task-1-init-configuration-file)
+    - [Task 2: Deploy microservices to AKS](#task-2-deploy-microservices-to-aks)
   - [Exercise 5: Deploying your Power App](#exercise-5-deploying-your-power-app)
     - [Task 1: Import the canvas app to your tenant environment](#task-1-import-the-canvas-app-to-your-tenant-environment)
     - [Task 2: Prepare and import the Power BI Dashboard to your tenant environment](#task-2-prepare-and-import-the-power-bi-dashboard-to-your-tenant-environment)
@@ -234,13 +235,13 @@ In this exercise, you wll deploy both **claims-manager** and **claims-reader** m
 2. Clone resources repository in the home directory:
 
 ```
-<youruser>@Azure:~$ git clone https://github.com/dsanchor/MCW-Analyzing-text-with-Azure-Machine-Learning-and-Cognitive-Services.git sources
+<youruser>@Azure:~$ git clone https://github.com/dsanchor/cloud-native-text-analytics-platform.git sources
 ```
 
 3. Once cloned, move to the directory where we have the source code for the  microservices:
 
 ```
-<youruser>@Azure:~$ cd sources/Hands-on\ lab/microservices/
+<youruser>@Azure:~$ cd sources/microservices/
 ```
 
 ### Task 1: Init configuration file
@@ -260,8 +261,10 @@ The following diagram summarizes all the interactions between the microservices 
 1. Let's start by  validating that an empty **config.properties** file exists and has been properly cloned:
 
 ```
-<youruser>@Azure:~/sources/Hands-on lab/microservices$ cat config.properties 
-
+<youruser>@Azure:~/sources/microservices$ cat config.properties 
+```
+The output should look like:
+```
 AZURE_COSMOS_KEY= 
 AZURE_COSMOS_URI=
 AZURE_COSMOS_DATABASE= 
@@ -274,14 +277,14 @@ MANAGER_SUMMARIZER_KEY=
 MANAGER_TEXTANALYTICS_KEY=
 MANAGER_TEXTANALYTICS_ENDPOINT=
 AKS_DOMAIN=
-````
+```
 
 2. To simplify edition of this file, let's open an editor within the **Azure Cloud Shell** by clicking in the **{}** icon. Then, navigate to the **config.properties** file and open it.
 
 
 ![Open an editor l](media/open-editor.png "Open cloud shell editor")
 
-3. Get the **CosmosDB** attributes. To do, select your **CosmosDb** instance and under **Settings**, click on **Keys**. Copy both **URI** and **PRIMARY KEY**. For the database name, click in **Data Explorer** and get the name of your database right below the **DATA** label. It is very likely that the database name is **ClaimsDb**.
+3. Get the **CosmosDB** attributes. To do, select your **CosmosDb** instance and under **Settings**, click on **Keys**. Copy both **URI** and **PRIMARY KEY** to the config.properties. For the database name, click in **Data Explorer** and get the name of your database right below the **DATA** label. It is very likely that the database name is **ClaimsDb**.
 
 4. For the **Classifier** and **Summarizer** attributes, select your **Machine Learning** instance and open the **Azure Machine Learning Studio**.  For each **Endpoint** (classifier and summarizer), move to the **Consume** tab and get the URL, PATH and KEY. Notice that you will get the **REST endpoint**, see next picture for more details, where the **URL** is underlined in red and **PATH** in yellow. 
 
@@ -289,10 +292,10 @@ AKS_DOMAIN=
 
 5. Now, you must get the **KEY** and **ENDPOINT** for the **Text Analytics** service. Open your **Cognitive Service for Language** and on the **Resource Management** pane, click on **Keys and Endpoints**. Copy both the **KEY 1** and **Endpoint** values and set them in the **config.properties** file accordingly.
 
-6. And finally, get the **AKS dns zone** that will be used to expose all of our apps. Ensure you use the correct **Resource group** name and **AKS** cluster. In this example command, we use the ones mentioned in the **Setup Guide**:
+6. And finally, get the **AKS dns zone** that will be used to expose all of our apps. Ensure you use the correct **Resource group** name and **AKS** cluster. In this example command, we use the ones mentioned in the **Setup Guide** (Remember that it will follow the naming aksSUFFIX):
 
 ```
-az aks show -n mlaks -g hands-on-lab --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table
+az aks show -n aksSUFFIX -g hands-on-lab --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table
 ```
 
 Take note of the output and place it in the **AKS_DOMAIN** property. 
@@ -317,13 +320,13 @@ AKS_DOMAIN=18f89dfed879865pdf.westeurope.aksapp.io
 7. Just to avoid some problems during the process of variable substitution using **sed** in next steps, let`s escape the '/' char:
 
 ```
-<youruser>@Azure:~/sources/Hands-on lab/microservices$ sed 's/\//\\\//g' config.properties 
+<youruser>@Azure:~/sources/microservices$ sed 's/\//\\\//g' config.properties 
 ```
 
 8. And finally, set every property in the file as Enviroment variable:
 
 ```
-<youruser>@Azure:~/sources/Hands-on lab/microservices$ source config.properties 
+<youruser>@Azure:~/sources/microservices$ source config.properties 
 ```
 
 ### Task 2: Deploy microservices to AKS
@@ -331,7 +334,7 @@ AKS_DOMAIN=18f89dfed879865pdf.westeurope.aksapp.io
 1. Get AKS credentials. Ensure you use the correct **Resource group** name and **AKS** cluster. In this example command, we use the ones mentioned in the **Setup Guide**::
 
 ```
-<youruser>@Azure:~/sources/Hands-on lab/microservices$ az aks get-credentials -n mlaks -g hands-on-lab
+<youruser>@Azure:~/sources/microservices$ az aks get-credentials -n mlaks -g hands-on-lab
 
 The behavior of this command has been altered by the following extension: aks-preview
 Merged "mlaks" as current context in /home/<youruser>/.kube/config
@@ -340,7 +343,7 @@ Merged "mlaks" as current context in /home/<youruser>/.kube/config
 2. Create a **namespace**:
 
 ```
-<youruser>@Azure:~/sources/Hands-on lab/microservices$ kubectl create namespace appinnovation
+<youruser>@Azure:~/sources/microservices$ kubectl create namespace appinnovation
 
 namespace/appinnovation created
 
@@ -380,13 +383,13 @@ sed -e "s/\${AKS_DOMAIN}/$AKS_DOMAIN/g" \
 4. You can check under which hosts these two microservices are exposed by running the following command:
 
 ```
-<youruser>@Azure:~/sources/Hands-on lab/microservices$ kubectl get ingress -n appinnovation
+<youruser>@Azure:~/sources/microservices$ kubectl get ingress -n appinnovation
 ```
 
 Feel free to perform a simple test by querying all the existing 'claims' using the **claims-reader** service (note that there is not any claim in the system yet.. you should get an empty array):
 
 ```
-<youruser>@Azure:~/sources/Hands-on lab/microservices$ curl -v  claims-reader.${AKS_DOMAIN}/claims
+<youruser>@Azure:~/sources/microservices$ curl -v  claims-reader.${AKS_DOMAIN}/claims
 ```
 
 ## Exercise 5: Deploying your Power App
