@@ -136,6 +136,12 @@ In this task, you provision the Azure Container Registry where docker images wil
 
 6. Ensure validation passes and then select **Create** on the `Review + create` tab.
 
+7. To view the new Container Registry, select **Go to resource**.
+
+8. Navigate to **Settings**, click on `Access Keys` and enable **Admin user**. By doing so, we let AML access to this registry once linked as will see in next step.
+
+   ![ACR Admin user is enabled for seamless AML integration.](media/acr-enable-admin.png 'Enable ACR admin user')
+
 ### Task 4: Create an Azure Machine Learning workspace
 
 In this task, you provision the Azure Machine Learning workspace.
