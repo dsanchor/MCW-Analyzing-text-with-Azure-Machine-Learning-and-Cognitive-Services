@@ -5,8 +5,14 @@
 
 In this workshop, you will help Contoso Ltd., an insurance company, build a proof of concept that shows how they can develop a solution that amplifies their agents' claims processing capabilities. 
 
-This repository provides all the necessary resources for developers, data scientists and citizen developers to deploy the required cloud infrastructure and configure all services involved. Let's have a look at the guides you will work through.
+This repository provides all the necessary resources for developers, data scientists and citizen developers to deploy the required cloud infrastructure and configure all services involved. 
 
+The final solution architecture looks like the following diagram.
+
+
+![The High-level architectural solution begins with a Claim, which points to Claims submission WebApp. The WebApp then points to Text Analytics, and Containerized Services, which includes a Classification Service and a Summary Service that both processes claim text.](media/new_arch_extended.png "High-level architectural solution")
+
+Let's have a look at the guides you will work through.
 
 1. [Setup Guide](/Setup%20Guide.md)
 
